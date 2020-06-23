@@ -1,0 +1,18 @@
+{
+    "name": "log",
+    "title": "记录信息",
+    "desc": "exec a cmd",
+    "main": "index.js",
+    "inputs": [
+        {
+            "key": "cwd",
+            "type": "folder",
+            "desc": "监控的文件夹"
+        },
+        {
+            "key": "cmd",
+            "type": "string",
+            "desc": "执行的命令"
+        }
+    ]
+}

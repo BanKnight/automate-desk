@@ -1,0 +1,7 @@
+{
+    "name": "chokidar",
+    "title": "文件监控",
+    "desc": "检查文件/文件夹有变化",
+    "main": "./index.js",
+    "inputs": []
+}

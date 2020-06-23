@@ -1,0 +1,18 @@
+{
+    "name": "watch",
+    "title": "文件",
+    "desc": "观察文件夹是否变化",
+    "main": "index.js",
+    "inputs": [
+        {
+            "key": "dir",
+            "type": "folder",
+            "desc": "当前路径"
+        },
+        {
+            "key": "cmd",
+            "type": "string",
+            "desc": "命令"
+        }
+    ]
+}

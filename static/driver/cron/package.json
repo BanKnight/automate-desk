@@ -1,0 +1,7 @@
+{
+    "name": "cron",
+    "title": "计划任务",
+    "desc": "可以用于定时",
+    "main": "./index.js",
+    "inputs": []
+}

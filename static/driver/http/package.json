@@ -1,0 +1,14 @@
+{
+    "name": "webhook",
+    "title": "网络钩子",
+    "desc": "通过钩子来响应事件",
+    "main": "./index.js",
+    "inputs": [
+        {
+            "key": "port",
+            "desc": "端口",
+            "type": "number",
+            "default": 8080
+        }
+    ]
+}

@@ -1,0 +1,7 @@
+{
+    "name": "event",
+    "title": "事件系统",
+    "desc": "通过触发事件来联动Applet",
+    "main": "./index.js",
+    "inputs": []
+}

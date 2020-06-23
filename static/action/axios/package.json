@@ -1,0 +1,22 @@
+{
+    "name": "axios",
+    "title": "发起请求",
+    "desc": "make a http request",
+    "inputs": [
+        {
+            "key": "method",
+            "type": "string",
+            "desc": "method"
+        },
+        {
+            "key": "url",
+            "type": "url",
+            "desc": "url"
+        },
+        {
+            "key": "configs",
+            "type": "object",
+            "desc": "configs"
+        }
+    ]
+}

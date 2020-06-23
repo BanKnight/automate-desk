@@ -1,0 +1,17 @@
+{
+    "name": "exec",
+    "title": "执行命令",
+    "desc": "执行命令",
+    "inputs": [
+        {
+            "key": "cwd",
+            "type": "folder",
+            "desc": "监控的文件夹"
+        },
+        {
+            "key": "cmd",
+            "type": "string",
+            "desc": "执行的命令"
+        }
+    ]
+}
