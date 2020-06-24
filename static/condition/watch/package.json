@@ -6,13 +6,9 @@
     "inputs": [
         {
             "key": "dir",
+            "title": "目录",
             "type": "folder",
             "desc": "当前路径"
-        },
-        {
-            "key": "cmd",
-            "type": "string",
-            "desc": "命令"
         }
     ]
 }

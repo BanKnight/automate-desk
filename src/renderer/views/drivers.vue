@@ -14,7 +14,7 @@
                         type="flex"
                         justify="space-between"
                         align="middle"
-                        style="padding:10px;border-bottom: 1px solid #EBEEF5;"
+                        style="padding:0 20px;border-bottom: 1px solid #EBEEF5;"
                     >
                         <span>{{scope.row.template.title}}</span>
                         <el-button icon="el-icon-setting" type="text">设置</el-button>
@@ -22,7 +22,7 @@
 
                     <el-button
                         :title="scope.row.template.desc"
-                        style="width:100%;height:80px;font-size:50px;border:0"
+                        style="width:100%;height:50px;font-size:30px;border:0"
                         :icon="state_icon(scope.row.state)"
                     ></el-button>
                 </el-card>

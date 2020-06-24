@@ -6,13 +6,18 @@
     "inputs": [
         {
             "key": "name",
-            "type": "folder",
-            "desc": "当前路径"
+            "title": "名称",
+            "type": "string",
+            "desc": "事件名称"
         },
         {
-            "key": "cmd",
-            "type": "string",
-            "desc": "命令"
+            "key": "names",
+            "title": "文件列表",
+            "type": "array",
+            "item": {
+                "type": "string",
+                "default": ""
+            }
         }
     ]
 }

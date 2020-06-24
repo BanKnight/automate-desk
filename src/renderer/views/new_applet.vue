@@ -7,14 +7,14 @@
         </el-header>
 
         <el-main>
-            <el-card>
-                <el-form label-width="80px" label-position="top">
+            <el-card class="full scroll-if-need">
+                <el-form label-width="80px" label-position="top" class="full">
                     <el-form-item label="基础">
                         <el-input v-model="name" placeholder="请输入名称" />
                     </el-form-item>
 
                     <el-form-item label="触发器">
-                        <el-select v-model="condition.name" placeholder="请选择">
+                        <el-select v-model="condition_name" placeholder="请选择" @change="select_cond">
                             <el-option
                                 v-for="one in template.condition"
                                 :key="one.name"
@@ -23,12 +23,21 @@
                             ></el-option>
                         </el-select>
 
-                        <el-button :disabled="condition.name == null" icon="el-icon-setting" />
+                        <el-button :disabled="condition_name == null" icon="el-icon-setting" />
+
+                        <input-form
+                            style="margin-left:10px"
+                            size="small"
+                            :key="condition_name"
+                            v-if="condition_name "
+                            v-model="condition[condition_name]"
+                            :meta="get_cond_meta_inputs(condition_name)"
+                        />
                     </el-form-item>
 
                     <el-form-item label="动作">
                         <el-row>
-                            <el-select v-model="new_action.name" placeholder="请选择">
+                            <el-select v-model="new_action_name" placeholder="请选择">
                                 <el-option
                                     v-for="one in template.action"
                                     :key="one.name"
@@ -38,7 +47,7 @@
                             </el-select>
 
                             <el-button
-                                :disabled="new_action.name == null"
+                                :disabled="new_action_name == null"
                                 icon="el-icon-plus"
                                 @click="add_action"
                             />
@@ -60,13 +69,19 @@
 </template>
 
 <script>
+
+import InputForm from "@/components/InputForm"
+
 export default {
+    components: { InputForm },
     data()    {
         return {
             name: "",
-            condition: { name: null, },
+            condition_name: null,
+            condition: {},
             actions: [],
-            new_action: { name: null }
+            new_action_name: null,
+            new_action: {},
         }
     },
     computed: {
@@ -77,16 +92,31 @@ export default {
         },
     },
     methods: {
+        select_cond(name)
+        {
+            if (this.condition[name] == null)
+            {
+                this.$set(this.condition, name, {})
+            }
+
+            return this.condition[name]
+        },
+        get_cond_meta_inputs(name)
+        {
+            return this.template.condition[name].inputs
+        },
+        select_action(name)
+        {
+            this.new_action = {}
+        },
         add_action()
         {
-
-
             this.actions.push({
-                ...this.new_action,
-                template: this.template.action[this.new_action.name]
+                inputs: this.new_action,
+                template: this.template.action[this.new_action_name],
             })
 
-            this.new_action = { name: null }
+            this.new_action = {}
         }
     }
 
