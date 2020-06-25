@@ -1,6 +1,6 @@
 <template>
     <el-table :data="data">
-        <el-table-column label="操作" width="120" row-key="id">
+        <el-table-column label="操作" width="150" row-key="id">
             <template slot="header" slot-scope="scope">
                 <el-button icon="el-icon-plus" style="margin-right:20px" @click="try_add(-1)"></el-button>
             </template>
@@ -14,7 +14,11 @@
 
         <el-table-column label="内容">
             <template slot-scope="scope">
-                <one-input :value="scope.row.val" :meta="meta.item" @input="trige_input" />
+                <one-input
+                    :value="scope.row.val"
+                    :meta="meta.item"
+                    @input="on_input(scope.row,$event)"
+                />
             </template>
         </el-table-column>
     </el-table>
@@ -25,7 +29,7 @@
 import input from "@/utils/input"
 
 export default {
-    name: "array-input",
+    name: "input-array",
     components: {
         "one-input": () => import("./OneInput")
     },
@@ -50,7 +54,7 @@ export default {
         this.init()
     },
     watch: {
-        value()
+        meta()
         {
             this.init()
         }
@@ -58,6 +62,14 @@ export default {
     methods: {
         init()
         {
+            this.data = []
+
+            if (this.value == null)
+            {
+                this.$emit("input", this.data)
+                return
+            }
+
             for (let i = 0, len = this.value.length; i < len; ++i)
             {
                 const val =
@@ -70,27 +82,27 @@ export default {
         },
         try_add(index)
         {
-            const val =
-            {
-                id: Date.now(),
-                val: input.make_default(this.meta.item),
-            }
+            const row = { id: Date.now() }
 
             if (index == -1)
             {
-                this.data.push(val)
+                this.$set(this.data, this.data.length, row)
             }
             else
             {
-                this.data.splice(index + 1, 0, val)
+                this.data.splice(index + 1, 0, row)
             }
+
+            this.on_input(row, input.make_default(this.meta.item))
         },
         try_del(index)
         {
-            this.data.splice(index, 1)
+            this.$delete(this.data, index)
         },
-        trige_input()
+        on_input(row, val)
         {
+            this.$set(row, "val", val)
+
             const ret = []
             for (let i = 0, len = this.data.length; i < len; ++i)
             {

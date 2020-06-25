@@ -5,11 +5,13 @@
     "inputs": [
         {
             "key": "cwd",
+            "title": "执行目录",
             "type": "folder",
-            "desc": "监控的文件夹"
+            "desc": "用于执行命令的目录"
         },
         {
             "key": "cmd",
+            "title": "命令",
             "type": "string",
             "desc": "执行的命令"
         }

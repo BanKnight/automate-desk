@@ -8,6 +8,7 @@ import new_applet from "@/views/new_applet"
 export default [
   {
     path: '/', component: Layout,
+    name: "home",
     redirect: "/applets",
     children: [
       {

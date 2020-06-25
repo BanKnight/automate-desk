@@ -1,7 +1,7 @@
 <template>
-    <el-form label-width="80px" label-position="top" size="mini">
+    <el-form label-width="80px" v-bind="$attrs">
         <el-form-item v-for="one in meta" :key="one.key" :label="one.title">
-            <one-input v-model="value[one.key]" :meta="one" />
+            <one-input :value="data[one.key]" @input="on_input(one.key,$event)" :meta="one" />
         </el-form-item>
     </el-form>
 </template>
@@ -25,15 +25,32 @@ export default {
             required: true,
         }
     },
-
+    data()
+    {
+        return { data: {} }
+    },
     created()    {
-        input.init(this.value, this.meta)
+        this.init()
     },
     watch: {
+
         meta()
         {
-            input.init(this.value, this.meta)
+            this.init()
         }
     },
+    methods: {
+        init()
+        {
+            this.data = JSON.parse(JSON.stringify(this.value))
+
+            input.init(this.data, this.meta, this.$set)
+        },
+        on_input(key, value)
+        {
+            this.data[key] = value;
+            this.$emit("input", this.data)
+        }
+    }
 }
 </script>

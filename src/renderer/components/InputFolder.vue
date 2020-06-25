@@ -1,5 +1,5 @@
 <template>
-    <el-input placeholder="请输入路径" v-model="path">
+    <el-input placeholder="请输入路径" v-model="data">
         <el-button slot="append" icon="el-icon-folder-opened" @click="on_open"></el-button>
     </el-input>
 </template>
@@ -13,7 +13,7 @@ export default {
     name: "input-folder",
     data()    {
         return {
-            path: this.value
+            data: this.value
         };
     },
     props: {
@@ -23,12 +23,31 @@ export default {
             default: ""
         }
     },
+    data()    {
+        return { data: null }
+    },
+    created()
+    {
+        this.init()
+    },
     watch: {
-        value()        {
-            this.path = this.value;
+
+        meta()
+        {
+            this.init()
         }
     },
     methods: {
+        init()
+        {
+            this.data = this.value
+
+            if (this.data == null)
+            {
+                this.on_input(input.make_default(this.meta, this.$set))
+            }
+
+        },
         on_open()        {
             let that = this;
 
@@ -46,11 +65,14 @@ export default {
                         return;
                     }
 
-                    that.path = filePaths[0];
-
-                    that.$emit("input", that.path);
+                    that.on_input(filePaths[0])
 
                 });
+        },
+        on_input(value)
+        {
+            this.data = value
+            this.$emit("input", this.data)
         }
     }
 };

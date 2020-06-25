@@ -7,16 +7,6 @@
             "key": "method",
             "type": "string",
             "desc": "method"
-        },
-        {
-            "key": "url",
-            "type": "url",
-            "desc": "url"
-        },
-        {
-            "key": "configs",
-            "type": "object",
-            "desc": "configs"
         }
     ]
 }

@@ -3,10 +3,13 @@
 用于个人的自动化工具，类似于IFTTT
 
 ## 基本类型
++ bool:
 + string:
 + number:需要指定 min,max
 + file：文件，指定suffix
 + folder: 文件夹
++ date：日期
++ time：一天中时间
 
 ## inputs 说明
 
@@ -32,6 +35,14 @@
         {"key":"name","type":"string","default":""},
         {"key":"age","type":"number","default":1,"step":1,"min":0,"max":100},
     ],
+    },
+```
++ 选项
+```json
+    {"key":"names","type":"select",
+        "options":[
+            {"key":"name","title":"名字","val":""},
+        ]
     },
 ```
 + 自定义对象

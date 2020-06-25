@@ -1,9 +1,13 @@
 import _default from "vuex"
+import { deep_clone } from "./common"
 
 function default_setter(target, key, val)
 {
     target[key] = val
 }
+
+const empty_array = []
+const empty_object = {}
 
 const inputs =
 {
@@ -11,7 +15,7 @@ const inputs =
     {
         if (type == "string" || type == "text"
             || type == "number" || type == "file"
-            || type == "folder")
+            || type == "folder" || type == "bool")
         {
             return true
         }
@@ -27,6 +31,10 @@ const inputs =
     is_json_type(type)
     {
         return type == "json"
+    },
+    is_select_type(type)
+    {
+        return type == "select"
     },
     init(target, meta, setter = default_setter)
     {
@@ -56,6 +64,10 @@ const inputs =
         {
             default_ = meta.default || ""
         }
+        else if (meta.type == "bool")
+        {
+            default_ = !!meta.default || false
+        }
         else if (meta.type == "number")
         {
             default_ = meta.default || 0
@@ -66,13 +78,17 @@ const inputs =
         }
         else if (meta.type == "array")     //一个类似input的结构
         {
-            default_ = []
+            default_ = deep_clone(meta.default || empty_array)
         }
         else if (meta.type == "json")
         {
-            default_ = {}
+            default_ = deep_clone(meta.default || empty_object)
         }
-        else
+        else if (meta.type == "select")
+        {
+            default_ = meta.default || meta.options[0].val
+        }
+        else                        
         {
             default_ = {}
             inputs.init(default_, meta, setter)

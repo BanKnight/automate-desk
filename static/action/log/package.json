@@ -6,13 +6,9 @@
     "inputs": [
         {
             "key": "cwd",
+            "title": "测试",
             "type": "folder",
             "desc": "监控的文件夹"
-        },
-        {
-            "key": "cmd",
-            "type": "string",
-            "desc": "执行的命令"
         }
     ]
 }
