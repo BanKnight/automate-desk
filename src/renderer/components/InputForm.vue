@@ -9,6 +9,7 @@
 <script>
 
 import input from "@/utils/input"
+import { deep_clone } from "@/utils/common"
 
 export default {
     name: "input-form",
@@ -42,7 +43,7 @@ export default {
     methods: {
         init()
         {
-            this.data = JSON.parse(JSON.stringify(this.value))
+            this.data = deep_clone(this.value)
 
             input.init(this.data, this.meta, this.$set)
         },

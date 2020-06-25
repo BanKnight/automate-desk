@@ -20,11 +20,34 @@
             "max": 200
         },
         {
-            "key": "names",
+            "key": "nation",
+            "title": "国家",
+            "type": "select",
+            "desc": "请选择你的国家",
+            "options": [
+                {
+                    "key": "china",
+                    "title": "中国",
+                    "val": "china"
+                },
+                {
+                    "key": "england",
+                    "title": "英国",
+                    "val": "england"
+                },
+                {
+                    "key": "america",
+                    "title": "美国",
+                    "val": "america"
+                }
+            ]
+        },
+        {
+            "key": "files",
             "title": "文件列表",
             "type": "array",
             "item": {
-                "type": "string",
+                "type": "file",
                 "default": ""
             }
         },
