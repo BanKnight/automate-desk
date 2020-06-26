@@ -29,6 +29,7 @@
     {"key":"names","type":"array","item":{"type":"string","default":""}},
 ```
 + 对象
+带限定字段的对象
 ```json
     {"key":"names",
     "type":[
@@ -47,5 +48,5 @@
 ```
 + 自定义对象
 ```json
-    {"key":"key","type":"json"},
+    {"key":"key","type":"object"},
 ```

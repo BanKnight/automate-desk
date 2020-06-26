@@ -7,7 +7,7 @@
             <template slot-scope="scope">
                 <el-button-group>
                     <el-button icon="el-icon-plus" @click="try_add(scope.$index)"></el-button>
-                    <el-button icon="el-icon-minus" @click="try_del(scope.$index)"></el-button>
+                    <el-button icon="el-icon-minus" type="danger" @click="try_del(scope.$index)"></el-button>
                 </el-button-group>
             </template>
         </el-table-column>

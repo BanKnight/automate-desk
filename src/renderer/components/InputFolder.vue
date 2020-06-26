@@ -1,5 +1,5 @@
 <template>
-    <el-input placeholder="请输入路径" v-model="data">
+    <el-input placeholder="请输入路径" :value="data" @input="on_input">
         <el-button slot="append" icon="el-icon-folder-opened" @click="on_open"></el-button>
     </el-input>
 </template>
@@ -18,9 +18,13 @@ export default {
     },
     props: {
         value: {
-            type: String,
+            type: String | Number,
             required: true,
             default: ""
+        },
+        meta: {
+            type: Object,
+            required: true,
         }
     },
     data()    {
@@ -29,13 +33,6 @@ export default {
     created()
     {
         this.init()
-    },
-    watch: {
-
-        meta()
-        {
-            this.init()
-        }
     },
     methods: {
         init()
@@ -46,7 +43,6 @@ export default {
             {
                 this.on_input(input.make_default(this.meta, this.$set))
             }
-
         },
         on_open()        {
             let that = this;

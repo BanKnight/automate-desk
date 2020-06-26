@@ -11,8 +11,8 @@
         @input="on_input"
         :meta="meta"
     />
-    <input-json
-        v-else-if="input.is_json_type(meta.type)"
+    <input-object
+        v-else-if="input.is_object_type(meta.type)"
         :value="value"
         @input="on_input"
         :meta="meta"
@@ -24,9 +24,10 @@
         :meta="meta"
     />
 
-    <el-card v-else class="box-card">
+    <el-card v-else-if="meta.type instanceof Array" class="box-card">
         <input-form :value="value" @input="on_input" :meta="meta.type" />
     </el-card>
+    <span v-else>{{meta.type}}</span>
 </template>
 
 <script>
@@ -35,17 +36,16 @@ import InputBasic from "./InputBasic"
 import InputArray from "./InputArray"
 import InputSelect from "./InputSelect"
 
-import InputJson from "./InputJson"
+import InputObject from "./InputObject"
 import InputForm from "./InputForm"
 
 import input from "@/utils/input"
 
 export default {
     name: "one-input",
-    components: { InputBasic, InputArray, InputSelect, InputJson, InputForm },
+    components: { InputBasic, InputArray, InputSelect, InputObject, InputForm },
     props: {
         value: {
-            type: String | Number | Array | Object,
             required: true,
         },
         meta: {

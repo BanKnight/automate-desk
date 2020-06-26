@@ -1,40 +1,41 @@
 import _default from "vuex"
 import { deep_clone } from "./common"
 
+const empty_array = []
+const empty_object = {}
+
+const basic_types = ["string", "text", "number", "file", "folder", "boolean", "function"]
+
 function default_setter(target, key, val)
 {
     target[key] = val
 }
 
-const empty_array = []
-const empty_object = {}
-
 const inputs =
 {
+    get basic_types()
+    {
+        return basic_types
+    },
     is_basic_type(type)
     {
-        if (type == "string" || type == "text"
-            || type == "number" || type == "file"
-            || type == "folder" || type == "bool")
-        {
-            return true
-        }
+        return basic_types.includes(type)
     },
     is_array_type(type)
     {
         return type == "array"
     },
-    is_object_type(type)
+    is_object_type(type)                    //自定义的object
     {
-        return type instanceof Array
-    },
-    is_json_type(type)
-    {
-        return type == "json"
+        return type == "object"
     },
     is_select_type(type)
     {
         return type == "select"
+    },
+    is_input_type(type)                     //固定字段的object
+    {
+        return type instanceof Array
     },
     init(target, meta, setter = default_setter)
     {
@@ -64,7 +65,7 @@ const inputs =
         {
             default_ = meta.default || ""
         }
-        else if (meta.type == "bool")
+        else if (meta.type == "boolean")
         {
             default_ = !!meta.default || false
         }
@@ -80,13 +81,17 @@ const inputs =
         {
             default_ = deep_clone(meta.default || empty_array)
         }
-        else if (meta.type == "json")
+        else if (meta.type == "object")
         {
             default_ = deep_clone(meta.default || empty_object)
         }
         else if (meta.type == "select")
         {
             default_ = meta.default || meta.options[0].val
+        }
+        else if (meta.type == "function")
+        {
+            default_ = new Function(meta.default || "")
         }
         else                        
         {
@@ -95,6 +100,20 @@ const inputs =
         }
 
         return default_
+    },
+    wrap_func(body)
+    {
+        return new Function(body)
+    },
+    pick_body(func)
+    {
+        const func_str = func.toString()
+        let start = func_str.indexOf("{")
+        let stop = func_str.indexOf("}")
+
+        let body = func_str.substring(start + 1, stop)
+
+        return body
     }
 }
 

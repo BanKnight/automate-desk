@@ -1,5 +1,5 @@
 <template>
-    <el-input placeholder="请输入路径" v-model="data">
+    <el-input placeholder="请输入路径" :value="data" @input="on_input">
         <el-button slot="append" icon="el-icon-folder-opened" @click="on_open"></el-button>
     </el-input>
 </template>
@@ -18,13 +18,14 @@ export default {
         };
     },
     props: {
-        suffix: {
-            type: String,
-        },
         value: {
-            type: String,
+            type: String | Number,
             required: true,
             default: ""
+        },
+        meta: {
+            type: Object,
+            required: true,
         }
     },
     data()    {
@@ -35,7 +36,6 @@ export default {
         this.init()
     },
     watch: {
-
         meta()
         {
             this.init()
@@ -44,14 +44,14 @@ export default {
     computed: {
         filters()
         {
-            if (!this.suffix)
+            if (!this.meta.suffix)
             {
                 return [
                     { name: "All Files", extensions: ["*"] }
                 ]
             }
             [
-                { name: this.suffix, extensions: [this.suffix] },
+                { name: this.meta.suffix, extensions: [this.meta.suffix] },
                 { name: "All Files", extensions: ["*"] }
             ]
         }

@@ -14,44 +14,39 @@
         :placeholder="meta.desc"
     />
 
-    <el-switch v-else-if="meta.type == 'bool'" :value="data" @input="on_input"></el-switch>
+    <el-switch v-else-if="meta.type == 'boolean'" :value="data" @input="on_input"></el-switch>
 
     <el-input-number
         v-else-if="meta.type == 'number'"
         :value="data"
         @input="on_input"
-        :min="meta.min"
-        :max="meta.max"
+        v-bind="meta"
         :label="meta.desc"
     ></el-input-number>
 
-    <input-file
-        v-else-if="meta.type == 'file'"
-        :value="data"
+    <input-file v-else-if="meta.type == 'file'" :value="data" @input="on_input" :meta="meta"></input-file>
+    <input-folder v-else-if="meta.type == 'folder'" :value="data" @input="on_input" :meta="meta"></input-folder>
+    <input-function
+        v-else-if="meta.type == 'function'"
+        :value="value"
         @input="on_input"
-        :label="meta.desc"
-        :suffix="meta.suffix"
-    ></input-file>
-    <input-folder
-        v-else-if="meta.type == 'folder'"
-        :value="data"
-        @input="on_input"
-        :label="meta.desc"
-    ></input-folder>
+        :meta="meta"
+    />
 </template>
 
 <script>
 import InputFile from "./InputFile"
 import InputFolder from "./InputFolder"
+import InputFunction from "./InputFunction"
 
 import input from "@/utils/input"
 
 export default {
     name: "input-basic",
-    components: { InputFile, InputFolder },
+    components: { InputFile, InputFolder, InputFunction },
     props: {
         value: {
-            type: String | Number,
+            type: String | Number | Boolean | Function,
             required: true,
         },
         meta: {
