@@ -93,7 +93,7 @@ export default {
                 this.data.splice(index + 1, 0, row)
             }
 
-            this.on_input(row, input.make_default(this.meta.item))
+            this.on_input(row, input.make_default(this.meta.define))
         },
         try_del(index)
         {

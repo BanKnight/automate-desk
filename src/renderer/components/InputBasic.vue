@@ -14,7 +14,7 @@
         :placeholder="meta.desc"
     />
 
-    <el-switch v-else-if="meta.type == 'boolean'" :value="data" @input="on_input"></el-switch>
+    <el-switch v-else-if="meta.type == 'boolean'" :value="data" @input="on_input" />
 
     <el-input-number
         v-else-if="meta.type == 'number'"
@@ -22,10 +22,11 @@
         @input="on_input"
         v-bind="meta"
         :label="meta.desc"
-    ></el-input-number>
+    />
 
-    <input-file v-else-if="meta.type == 'file'" :value="data" @input="on_input" :meta="meta"></input-file>
-    <input-folder v-else-if="meta.type == 'folder'" :value="data" @input="on_input" :meta="meta"></input-folder>
+    <input-file v-else-if="meta.type == 'file'" :value="data" @input="on_input" :meta="meta" />
+    <input-folder v-else-if="meta.type == 'folder'" :value="data" @input="on_input" :meta="meta" />
+
     <input-function
         v-else-if="meta.type == 'function'"
         :value="value"
@@ -37,6 +38,7 @@
 <script>
 import InputFile from "./InputFile"
 import InputFolder from "./InputFolder"
+
 import InputFunction from "./InputFunction"
 
 import input from "@/utils/input"

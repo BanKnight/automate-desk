@@ -5,10 +5,54 @@
     "main": "index.js",
     "inputs": [
         {
-            "key": "dir",
-            "title": "目录",
-            "type": "folder",
-            "desc": "当前路径"
+            "key": "files",
+            "title": "文件列表",
+            "type": "array",
+            "desc": "监控的文件列表",
+            "define": {
+                "type": "fileOrFolder"
+            }
+        },
+        {
+            "key": "events",
+            "title": "事件",
+            "type": "array",
+            "desc": "监控的事件",
+            "define": {
+                "type": "select",
+                "options": [
+                    {
+                        "key": "add",
+                        "title": "文件新增",
+                        "val": "add"
+                    },
+                    {
+                        "key": "change",
+                        "title": "修改",
+                        "val": "change"
+                    },
+                    {
+                        "key": "unlink",
+                        "title": "文件删除",
+                        "val": "unlink"
+                    },
+                    {
+                        "key": "addDir",
+                        "title": "文件夹新增",
+                        "val": "addDir"
+                    },
+                    {
+                        "key": "unlinkDir",
+                        "title": "文件夹删除",
+                        "val": "unlinkDir"
+                    },
+                    {
+                        "key": "all",
+                        "title": "所有",
+                        "val": "all"
+                    }
+                ]
+            }
         }
     ]
 }

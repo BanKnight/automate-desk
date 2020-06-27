@@ -49,7 +49,7 @@ export default {
 
             dialog.showOpenDialog(
                 {
-                    properties: ["openDirectory"]
+                    properties: ["openDirectory", "promptToCreate"]
                 })
                 .then(({ canceled, filePaths }) =>
                 {

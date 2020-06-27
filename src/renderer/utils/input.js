@@ -4,8 +4,7 @@ import { deep_clone } from "./common"
 const empty_array = []
 const empty_object = {}
 
-const basic_types = ["string", "text", "number", "file", "folder", "boolean", "function"]
-
+const basic_types = ["string", "boolean", "number", "text", "file", "folder", "function"]
 function default_setter(target, key, val)
 {
     target[key] = val
