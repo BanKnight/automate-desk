@@ -16,6 +16,8 @@ exports.start = function ()
         });
 
         this.watchers.add(watcher)
+
+        return watcher
     }
 
     ret.unwatch = function (watcher)

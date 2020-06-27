@@ -10,7 +10,16 @@
             "type": "array",
             "desc": "监控的文件列表",
             "define": {
-                "type": "fileOrFolder"
+                "type": "file"
+            }
+        },
+        {
+            "key": "folders",
+            "title": "文件夹",
+            "type": "array",
+            "desc": "监控的文件夹列表",
+            "define": {
+                "type": "folder"
             }
         },
         {

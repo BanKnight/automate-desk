@@ -6,7 +6,8 @@
     "inputs": [
         {
             "key": "port",
-            "desc": "端口",
+            "title": "端口",
+            "desc": "设置webhook的钩子",
             "type": "number",
             "default": 8080
         }

@@ -13,7 +13,7 @@
 
         <el-table-column label="名称" width="200">
             <template slot-scope="scope">
-                <el-input v-model="scope.row.key" />
+                <el-input :value="scope.row.key" @input="on_input_key(scope.row,$event)" />
             </template>
         </el-table-column>
 
@@ -43,14 +43,14 @@
                     v-if="scope.row.type == 'array' && scope.row.item.type"
                     :key="'array.'+scope.row.item.type"
                     :value="scope.row.values[scope.row.type]"
-                    @input="on_input(scope.row,$event)"
+                    @input="on_input_val(scope.row,$event)"
                     :meta="scope.row"
                 />
                 <one-input
                     v-else-if="scope.row.type != 'array'"
                     :key="scope.row.type"
                     :value="scope.row.values[scope.row.type]"
-                    @input="on_input(scope.row,$event)"
+                    @input="on_input_val(scope.row,$event)"
                     :meta="scope.row"
                 />
             </template>
@@ -150,6 +150,8 @@ export default {
         try_del(index)
         {
             this.$delete(this.data, index)
+
+            this.trige_input()
         },
         select_type(row, type)
         {
@@ -170,16 +172,26 @@ export default {
 
             this.$set(row.values, type, existed)
         },
-        on_input(row, val)
+        on_input_key(row, key)
+        {
+            row.key = key
+
+            this.trige_input()
+        },
+        on_input_val(row, val)
         {
             this.$set(row.values, row.type, val)
 
+            this.trige_input()
+        },
+        trige_input()
+        {
             const ret = {}
             for (let i = 0, len = this.data.length; i < len; ++i)
             {
                 const one = this.data[i]
                 const val = one.values[one.type]
-                if (val)
+                if (val && one.key)
                 {
                     ret[one.key] = val
                 }
