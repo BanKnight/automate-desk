@@ -183,7 +183,6 @@ export default class App
 
         driver = this.new_driver(config.name, config.input)
 
-
         if (config.state == "running")
         {
             driver.start()

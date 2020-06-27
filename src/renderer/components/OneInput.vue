@@ -24,10 +24,9 @@
         :meta="meta"
     />
 
-    <el-card v-else-if="meta.type instanceof Array" class="box-card">
-        <input-form :value="value" @input="on_input" :meta="meta.type" />
+    <el-card v-else-if="input.is_input_type(meta.type)" class="box-card">
+        <input-form :value="value" @input="on_input" :meta="meta.define" />
     </el-card>
-    <span v-else>{{meta.type}}</span>
 </template>
 
 <script>

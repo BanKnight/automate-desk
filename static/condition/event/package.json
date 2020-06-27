@@ -5,16 +5,16 @@
     "main": "index.js",
     "inputs": [
         {
-            "key": "func",
-            "title": "函数",
-            "type": "function",
-            "default": "1"
-        },
-        {
             "key": "name",
             "title": "名称",
             "type": "string",
             "desc": "事件名称"
+        },
+        {
+            "key": "args",
+            "title": "参数",
+            "type": "object",
+            "desc": "过滤的参数"
         }
     ]
 }

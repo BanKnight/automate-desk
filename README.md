@@ -26,13 +26,14 @@
 ```
 + 数组
 ```json
-    {"key":"names","type":"array","item":{"type":"string","default":""}},
+    {"key":"names","type":"array","define":{"type":"string","default":""}},
 ```
 + 对象
 带限定字段的对象
 ```json
     {"key":"names",
-    "type":[
+    "type":"input",
+    "define":[
         {"key":"name","type":"string","default":""},
         {"key":"age","type":"number","default":1,"step":1,"min":0,"max":100},
     ],

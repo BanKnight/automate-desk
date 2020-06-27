@@ -35,7 +35,7 @@ const inputs =
     },
     is_input_type(type)                     //固定字段的object
     {
-        return type instanceof Array
+        return type == "input"
     },
     init(target, meta, setter = default_setter)
     {
@@ -93,7 +93,7 @@ const inputs =
         {
             default_ = new Function(meta.default || "")
         }
-        else                        
+        else if (meta.type == "input")                        
         {
             default_ = {}
             inputs.init(default_, meta, setter)

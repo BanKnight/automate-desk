@@ -16,7 +16,7 @@
             <template slot-scope="scope">
                 <one-input
                     :value="scope.row.val"
-                    :meta="meta.item"
+                    :meta="meta.define"
                     @input="on_input(scope.row,$event)"
                 />
             </template>
