@@ -14,10 +14,13 @@
                         type="flex"
                         justify="space-between"
                         align="middle"
-                        style="padding:0 20px;border-bottom: 1px solid #EBEEF5;"
+                        style="padding-left:20px;border-bottom: 1px solid #EBEEF5;"
                     >
                         <span>{{scope.row.name}}</span>
-                        <el-button icon="el-icon-setting" type="text">设置</el-button>
+                        <el-button-group>
+                            <el-button icon="el-icon-delete-solid" style="border:0">删除</el-button>
+                            <el-button icon="el-icon-setting" style="border:0">设置</el-button>
+                        </el-button-group>
                     </el-row>
 
                     <el-button

@@ -81,6 +81,8 @@ export default {
                 options.push(one)
             }
 
+            console.log(this.drivers, options)
+
             return options
         }
     },

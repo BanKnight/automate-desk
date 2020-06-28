@@ -32,8 +32,6 @@ export default {
     async new_driver({ commit, state }, config)
     {
 
-        console.log("renderer new driver", config)
-
         const one = await ipc.invoke("new_driver", config)
 
         const template = state.template

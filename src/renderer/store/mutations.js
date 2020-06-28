@@ -9,7 +9,7 @@ export default {
 
     new_driver(state, data)
     {
-        state.drivers[data.name] = data
+        state.drivers[data.template.name] = data
     },
 
     new_applet(state, data)
@@ -23,7 +23,7 @@ export default {
     },
     update_driver(state, data)
     {
-        state.drivers[data.name] = data
+        state.drivers[data.template.name] = data
     },
 
     update_applet(state, data)
