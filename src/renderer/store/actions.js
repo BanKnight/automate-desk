@@ -3,18 +3,44 @@ import ipc from "../utils/ipcRenderer"
 export default {
     async get_all({ commit })
     {
-        const ret = await ipc.invoke("get_all")
+        const app = await ipc.invoke("get_all")
 
-        console.dir(ret)
+        for (let id in app.applets)
+        {
+            const one = app.applets[id]
 
-        commit("init", ret)
+            one.template = app.template.condition[one.template]
+
+            for (let action of one.actions)
+            {
+                action.template = app.template.action[action.template]
+            }
+        }
+
+        for (let name in app.drivers)
+        {
+            const one = app.drivers[name]
+
+            one.template = app.template.driver[one.template]
+        }
+
+        console.dir(app)
+
+        commit("init", app)
     },
 
-    async new_driver({ commit }, config)
+    async new_driver({ commit, state }, config)
     {
-        const ret = await ipc.invoke("new_driver", config)
 
-        commit("new_driver", ret)
+        console.log("renderer new driver", config)
+
+        const one = await ipc.invoke("new_driver", config)
+
+        const template = state.template
+
+        one.template = template.driver[one.template]
+
+        commit("new_driver", one)
     },
 
     async new_applet({ commit }, config)

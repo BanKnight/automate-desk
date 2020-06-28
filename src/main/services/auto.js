@@ -30,18 +30,25 @@ export default function ()
         {
             let one = core.applets[key]
 
-            ret.applets[key] = { template: one.template.package.name, ...one.options, state: one.state }
+            ret.applets[key] = one.save()
         }
 
         for (let key in core.drivers)
         {
             let one = core.drivers[key]
 
-            ret.drivers[key] = { template: one.template.package.name, ...one.options, state: one.state }
+            ret.drivers[key] = one.save()
         }
 
-        console.log("---------------get all---------------")
-
         return ret
+    })
+
+    ipcMain.handle("new_driver", async (event, config) =>
+    {
+        const one = core.new_driver(config)
+
+        one.start()
+
+        return one.save()
     })
 }

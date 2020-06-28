@@ -3,7 +3,7 @@
         <el-table-column prop="name" label="名称">
             <template slot="header" slot-scope="scope">
                 <el-row type="flex">
-                    <el-button icon="el-icon-plus" style="margin-right:20px"></el-button>
+                    <el-button icon="el-icon-plus" style="margin-right:20px" @click="try_add"></el-button>
                     <el-input v-model="search" placeholder="输入关键字搜索" />
                 </el-row>
             </template>
@@ -57,11 +57,13 @@ export default {
             {
                 let one = this.$store.getters.drivers[name]
 
-                array.push({ ...one, template: this.$store.getters.template.driver[one.template] })
+                array.push(one)
             }
+
+            console.log("----------------drivers", array)
+
             return array
         },
-
         filter()
         {
             if (this.search.length == 0)
@@ -87,6 +89,10 @@ export default {
 
             return "el-icon-error"
         },
+        try_add()
+        {
+            this.$router.push({ name: 'new_driver' })
+        }
 
     }
 

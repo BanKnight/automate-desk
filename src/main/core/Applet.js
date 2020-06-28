@@ -59,11 +59,6 @@ export default class Applet
         this.actions = []
     }
 
-    get enabled()
-    {
-        return !!this.$options.enabled
-    }
-
     trigger()
     {
         setImmediate(() =>
@@ -73,5 +68,17 @@ export default class Applet
                 action.run()
             }
         })
+    }
+
+    save()
+    {
+        const data = {
+            id: this.id,
+            name: this.name,
+            options: this.options,
+            state: this.state
+        }
+
+        return data
     }
 }

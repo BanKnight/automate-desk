@@ -19,8 +19,8 @@ export default class App
         }
 
         this.config = null
-        this.applets = {}
-        this.drivers = {}               //
+        this.applets = {}               //[id] = {}
+        this.drivers = {}               //[name]
     }
 
     load()
@@ -73,33 +73,25 @@ export default class App
             }
         }
 
-        {
-            const data = {
-                applets: [],
-                drivers: [],
-            }
+        // {
+        //     const data = {
+        //         applets: [],
+        //         drivers: [],
+        //     }
 
-            data.drivers.push({
-                name: "chokidar",
-                state: "running",
-            })
-            data.drivers.push({
-                name: "event",
-                state: "running",
-            })
+        //     for (let name in this.template.driver)
+        //     {
+        //         let one = this.template.driver[name]
 
-            data.drivers.push({
-                name: "ui",
-                state: "running",
-            })
+        //         data.drivers.push({
+        //             name: name,
+        //             state: "init",
+        //             options: {}
+        //         })
+        //     }
 
-            data.drivers.push({
-                name: "cron",
-                state: "running",
-            })
-
-            this.update(data)
-        }
+        //     this.update(data)
+        // }
     }
 
     update(config)
@@ -148,22 +140,23 @@ export default class App
             }
         }
     }
-    new_driver(options)
+    new_driver(config)
     {
-        const template = this.template.driver[options.name]
+        const template = this.template.driver[config.name]
 
-        console.log("new driver", options.name, template)
+        console.log("new driver", config.name, template)
+        console.dir(config)
 
-        const driver = new Driver(template, options, this)
+        const driver = new Driver(template, config.options, this)
 
-        this.drivers[options.name] = driver
+        this.drivers[config.name] = driver
 
         return driver
     }
 
-    new_applet(options)
+    new_applet(config)
     {
-        const applet = new Applet(options, this)
+        const applet = new Applet(config, this)
 
         this.applets[applet.id] = applet
 

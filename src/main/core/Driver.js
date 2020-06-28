@@ -22,9 +22,12 @@ export default class Driver
         return this.template.name
     }
 
-    get enabled()
+    save()
     {
-        return !!this.options.enabled
+        return {
+            template: this.template.name,
+            options: this.options,
+            state: this.state,
+        }
     }
-
 }

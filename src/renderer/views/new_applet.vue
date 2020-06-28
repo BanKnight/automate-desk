@@ -10,33 +10,41 @@
         <el-main>
             <el-tabs value="condition" stretch>
                 <el-tab-pane label="条件" name="condition" class="full scroll-if-need">
-                    <el-form @submit.native.prevent label-width="80px" label-position="top">
-                        <el-form-item label="触发器">
-                            <el-select
-                                v-model="condition_name"
-                                placeholder="请选择"
-                                @change="select_cond"
-                            >
-                                <el-option
-                                    v-for="one in template.condition"
-                                    :key="one.name"
-                                    :label="one.title"
-                                    :value="one.name"
-                                ></el-option>
-                            </el-select>
+                    <el-card class="box-card">
+                        <el-form @submit.native.prevent label-width="80px" label-position="top">
+                            <el-form-item label="触发器">
+                                <el-select
+                                    v-model="condition_name"
+                                    placeholder="请选择"
+                                    @change="select_cond"
+                                >
+                                    <el-option
+                                        v-for="one in template.condition"
+                                        :key="one.name"
+                                        :label="one.title"
+                                        :value="one.name"
+                                    ></el-option>
+                                </el-select>
 
-                            <input-form
-                                :key="condition_name"
-                                v-if="condition_name "
-                                v-model="condition[condition_name]"
-                                label-position="top"
-                                :meta="get_cond_meta_inputs(condition_name)"
-                            />
-                        </el-form-item>
-                    </el-form>
+                                <input-form
+                                    :key="condition_name"
+                                    v-if="condition_name "
+                                    v-model="condition[condition_name]"
+                                    label-position="top"
+                                    :meta="get_cond_meta_inputs(condition_name)"
+                                />
+                            </el-form-item>
+                        </el-form>
+                    </el-card>
                 </el-tab-pane>
                 <el-tab-pane label="动作" name="actions" class="full scroll-if-need">
-                    <el-table :data="actions" height="100%" size="medium" row-key="id">
+                    <el-table
+                        :data="actions"
+                        height="100%"
+                        size="medium"
+                        row-key="id"
+                        class="full-width"
+                    >
                         <el-table-column prop="name" label="名称">
                             <template slot="header" slot-scope="scope">
                                 <el-row type="flex" justify="space-between">
