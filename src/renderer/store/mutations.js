@@ -1,3 +1,5 @@
+import Vue from "vue"
+
 export default {
 
     init(state, data)
@@ -19,7 +21,9 @@ export default {
 
     del_applet(state, id)
     {
-        delete state.applets[id]
+        Vue.delete(state.applets, id)
+
+        console.log("after del", state.applets)
     },
     update_driver(state, data)
     {

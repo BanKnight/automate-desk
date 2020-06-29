@@ -103,6 +103,10 @@ export default {
         {
             this.$set(row, "val", val)
 
+            this.trige_input()
+        },
+        trige_input()
+        {
             const ret = []
             for (let i = 0, len = this.data.length; i < len; ++i)
             {

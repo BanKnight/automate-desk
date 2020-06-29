@@ -90,7 +90,7 @@ export default {
         },
         on_input(value)
         {
-            this.data = value
+            this.data = value.split("\\").join("/")
             this.$emit("input", this.data)
         }
     }

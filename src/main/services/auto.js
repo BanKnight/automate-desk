@@ -60,4 +60,18 @@ export default function ()
 
         return one.save()
     })
+
+    ipcMain.handle("del_applet", async (event, id) =>
+    {
+        core.del_applet(id)
+
+        return id
+    })
+
+    ipcMain.handle("update_applet", async (event, config) =>
+    {
+        const one = core.update_applet(config)
+
+        return one.save()
+    })
 }

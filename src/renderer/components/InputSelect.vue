@@ -1,5 +1,5 @@
 <template>
-    <el-select :value="data" @input="on_input" :placeholder="meta.desc" clearable>
+    <el-select :value="data" @change="on_input" :placeholder="meta.desc" clearable>
         <el-option
             v-for="item in meta.options"
             :key="item.key"

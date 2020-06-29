@@ -46,6 +46,8 @@ export default {
             this.data = deep_clone(this.value)
 
             input.init(this.data, this.meta, this.$set)
+
+            this.$emit("input", this.data)
         },
         on_input(key, value)
         {

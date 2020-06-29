@@ -165,6 +165,26 @@ export default class App
         return applet
     }
 
+    del_applet(id)
+    {
+        console.log("del_applet", id)
+
+        const applet = this.applets[id]
+        if (applet == null)
+        {
+            return
+        }
+
+        if (applet.state == "running")
+        {
+            applet.stop()
+        }
+
+        delete this.applets[id]
+
+        return applet
+    }
+
     update_driver(config)
     {
         let driver = this.drivers[config.name]
@@ -190,8 +210,11 @@ export default class App
     {
         let one = this.applets[config.id]
 
+        let should_start = false
+
         if (one && one.state == "running")
         {
+            should_start = true
             one.stop()
         }
 
@@ -199,7 +222,7 @@ export default class App
 
         one = this.new_applet(config)
 
-        if (one && config.state == "running")
+        if (one && should_start)
         {
             one.start()
         }

@@ -20,7 +20,8 @@ exports.start = function ()
         {
             const watcher = chokidar.watch(one.path, {
                 ignored: /(^|[\/\\])\../, // ignore dotfiles
-                persistent: true
+                persistent: true,
+                ignoreInitial: true,
             })
 
             watcher.on(one.event, () =>
@@ -31,11 +32,12 @@ exports.start = function ()
             info.push(watcher)
         }
 
-        for (let one of config.files)
+        for (let one of config.folders)
         {
             const watcher = chokidar.watch(one.path, {
                 ignored: /(^|[\/\\])\../, // ignore dotfiles
-                persistent: true
+                persistent: true,
+                ignoreInitial: true,
             })
 
             watcher.on(one.event, () =>

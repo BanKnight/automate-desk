@@ -133,6 +133,7 @@ export default {
                 id: Date.now(),
                 name: this.new_action_name,
                 options: {},
+                template: this.template.action[this.new_action_name]
             })
             this.new_action_name = null
         },
