@@ -4,7 +4,7 @@
             <el-row type="flex" justify="space-around" align="middle" class="full">
                 <el-button @click="$router.push('/')" icon="el-icon-back"></el-button>
                 <el-input v-model="name" placeholder="请输入名称" style="margin:0 10px" />
-                <el-button @click="$router.push('/')" icon="el-icon-check">保存</el-button>
+                <el-button @click="save" icon="el-icon-check">保存</el-button>
             </el-row>
         </el-header>
         <el-main>
@@ -85,9 +85,9 @@
                                     </el-row>
 
                                     <input-form
-                                        :key="scope.row.template.name"
-                                        v-model="scope.row.inputs"
-                                        :meta="scope.row.template.inputs"
+                                        :key="scope.row.name"
+                                        v-model="scope.row.options"
+                                        :meta="template.action[scope.row.name].inputs"
                                         label-position="left"
                                         style="padding:10px 20px"
                                     />
@@ -131,8 +131,8 @@ export default {
         {
             this.actions.push({
                 id: Date.now(),
-                inputs: {},
-                template: this.template.action[this.new_action_name],
+                name: this.new_action_name,
+                options: {},
             })
             this.new_action_name = null
         },
@@ -140,6 +140,30 @@ export default {
         {
             this.$delete(this.actions, index)
 
+        },
+        async save()
+        {
+            if (!this.name)
+            {
+                return
+            }
+
+            if (!this.condition.name)
+            {
+                return
+            }
+
+            // if (this.actions.length == 0)
+            // {
+            //     return
+            // }
+
+            await this.$store.dispatch("new_applet", {
+                name: this.name,
+                condition: this.condition,
+                actions: this.actions,
+            })
+            this.$router.push('/applets')
         }
     }
 

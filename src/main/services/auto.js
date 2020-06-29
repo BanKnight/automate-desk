@@ -51,4 +51,13 @@ export default function ()
 
         return one.save()
     })
+
+    ipcMain.handle("new_applet", async (event, config) =>
+    {
+        const one = core.new_applet(config)
+
+        one.start()
+
+        return one.save()
+    })
 }

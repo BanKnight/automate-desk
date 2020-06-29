@@ -12,6 +12,7 @@ export default class Applet
 
         this.id = options.id
         this.name = options.name
+        this.state = "init"
 
         this.condition = null
         this.actions = []
@@ -38,12 +39,16 @@ export default class Applet
 
     start()
     {
+        this.state = "error"
+
         for (let one of this.actions)
         {
             one.start()
         }
 
         this.condition.start()
+
+        this.state = "running"
     }
 
     stop()
@@ -55,8 +60,7 @@ export default class Applet
             one.stop()
         }
 
-        this.condition = null
-        this.actions = []
+        this.state = "init"
     }
 
     trigger()

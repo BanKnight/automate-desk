@@ -14,7 +14,11 @@ export default class Driver
             this.inst = this.template.start.call(this)
             this.state = "running"
         }
-        this.stop = this.template.stop.bind(this)
+        this.stop = () =>
+        {
+            this.template.stop.call(this)
+            this.state = "init"
+        }
     }
 
     get name()

@@ -156,6 +156,8 @@ export default class App
 
     new_applet(config)
     {
+        console.log("new_applet", config)
+
         const applet = new Applet(config, this)
 
         this.applets[applet.id] = applet

@@ -32,7 +32,7 @@ function createMainWindow()
   mainWindow = new BrowserWindow({
     height: 600,
     useContentSize: true,
-    width: 400,
+    width: 450,
     minWidth: 400,
     show: false,
     frame: config.IsUseSysTitle,

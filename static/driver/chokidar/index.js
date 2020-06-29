@@ -9,9 +9,11 @@ exports.start = function ()
     this.id_helper = 0
     this.watchers = {}
 
-    ret.watch = function (config)       //{files,folders},files = [{path,event}]
+    const that = this
+
+    ret.watch = (config, cb) =>       //{files,folders},files = [{path,event}]
     {
-        const id = ++this.id_helper
+        const id = ++that.id_helper
         const info = []
 
         for (let one of config.files)
@@ -23,7 +25,7 @@ exports.start = function ()
 
             watcher.on(one.event, () =>
             {
-                this.resolve(one)
+                cb(one.path, one.event)
             })
 
             info.push(watcher)
@@ -38,25 +40,25 @@ exports.start = function ()
 
             watcher.on(one.event, () =>
             {
-                this.resolve(one)
+                cb(one.path, one.event)
             })
             info.push(watcher)
         }
 
-        this.watchers[id] = info
+        that.watchers[id] = info
 
         return id
     }
 
-    ret.unwatch = function (id)
+    ret.unwatch = (id) =>
     {
-        const info = this.watchers[id]
+        const info = that.watchers[id]
         if (info == null)
         {
             return
         }
 
-        delete this.watchers[id]
+        delete that.watchers[id]
 
         for (let one of info)
         {
@@ -69,14 +71,16 @@ exports.start = function ()
 
 exports.stop = function ()
 {
-    for (let id in this.watchers)
+    const that = this
+
+    for (let id in that.watchers)
     {
-        let info = this.watchers[id]
+        let info = that.watchers[id]
 
         for (let one of info)
         {
             one.close()
         }
     }
-    this.watchers = {}
+    that.watchers = null
 }

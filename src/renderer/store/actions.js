@@ -9,11 +9,18 @@ export default {
         {
             const one = app.applets[id]
 
-            one.template = app.template.condition[one.template]
+            one.condition = {
+                name: one.options.condition.name,
+                options: one.options.condition.options,
+            }
 
-            for (let action of one.actions)
+            one.condition.template = app.template.condition[one.condition.name]
+
+            one.actions = []
+
+            for (let action of one.options.actions)
             {
-                action.template = app.template.action[action.template]
+                action.template = app.template.action[action.name]
             }
         }
 
@@ -31,7 +38,6 @@ export default {
 
     async new_driver({ commit, state }, config)
     {
-
         const one = await ipc.invoke("new_driver", config)
 
         const template = state.template
@@ -41,11 +47,29 @@ export default {
         commit("new_driver", one)
     },
 
-    async new_applet({ commit }, config)
+    async new_applet({ commit, state }, config)
     {
-        const ret = await ipc.invoke("new_applet", config)
+        console.log("new_applet", config)
 
-        commit("new_applet", ret)
+        const one = await ipc.invoke("new_applet", config)
+
+        const template = state.template
+
+        one.condition = {
+            name: one.options.condition.name,
+            options: one.options.condition.options,
+        }
+
+        one.condition.template = template.condition[one.condition.name]
+
+        one.actions = []
+
+        for (let action of one.options.actions)
+        {
+            action.template = template.action[action.name]
+        }
+
+        commit("new_applet", one)
     },
 
     async del_applet({ commit }, id)

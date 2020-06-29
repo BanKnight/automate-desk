@@ -16,5 +16,13 @@ export default class TCondition
         this.package = nrequire(package_path)
     }
 
+    get start()
+    {
+        return this.template.start
+    }
 
+    get stop()
+    {
+        return this.template.stop
+    }
 }
