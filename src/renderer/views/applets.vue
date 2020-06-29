@@ -18,7 +18,7 @@
                     >
                         <span>{{scope.row.name}}</span>
                         <el-button-group>
-                            <el-button icon="el-icon-delete-solid" style="border:0">删除</el-button>
+                            <el-button icon="el-icon-delete" style="border:0">删除</el-button>
                             <el-button icon="el-icon-setting" style="border:0">设置</el-button>
                         </el-button-group>
                     </el-row>

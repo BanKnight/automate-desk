@@ -19,7 +19,7 @@
                         >
                             <span>{{scope.row.template.title}}</span>
                             <el-button-group>
-                                <el-button icon="el-icon-delete-solid" style="border:0">删除</el-button>
+                                <el-button icon="el-icon-delete" style="border:0">删除</el-button>
                                 <el-button
                                     icon="el-icon-view"
                                     style="border:0"
