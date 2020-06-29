@@ -24,17 +24,14 @@
                             ></el-option>
                         </el-select>
                     </el-form-item>
-
-                    <el-form-item>
-                        <input-form
-                            v-if="curr && curr.inputs.length > 0"
-                            :key="curr.name"
-                            v-model="inputs"
-                            :meta="curr.inputs"
-                            label-position="top"
-                        />
-                    </el-form-item>
                 </el-form>
+                <input-form
+                    v-if="curr && curr.inputs.length > 0"
+                    :key="curr.name"
+                    v-model="inputs"
+                    :meta="curr.inputs"
+                    label-position="top"
+                />
             </el-card>
         </el-main>
 

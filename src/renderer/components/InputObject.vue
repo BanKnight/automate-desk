@@ -38,7 +38,7 @@
         </el-table-column>
 
         <el-table-column label="内容">
-            <template slot-scope="scope">
+            <template slot-scope="scope" v-if="scope.row.type">
                 <one-input
                     v-if="scope.row.type == 'array' && scope.row.item.type"
                     :key="'array.'+scope.row.item.type"

@@ -6,25 +6,62 @@ exports.start = function ()
 {
     const ret = {}
 
-    this.watchers = new Set()
+    this.id_helper = 0
+    this.watchers = {}
 
-    ret.watch = function (...args)
+    ret.watch = function (config)       //{files,folders},files = [{path,event}]
     {
-        const watcher = chokidar.watch(...args, {
-            ignored: /(^|[\/\\])\../, // ignore dotfiles
-            persistent: true
-        });
+        const id = ++this.id_helper
+        const info = []
 
-        this.watchers.add(watcher)
+        for (let one of config.files)
+        {
+            const watcher = chokidar.watch(one.path, {
+                ignored: /(^|[\/\\])\../, // ignore dotfiles
+                persistent: true
+            })
 
-        return watcher
+            watcher.on(one.event, () =>
+            {
+                this.resolve(one)
+            })
+
+            info.push(watcher)
+        }
+
+        for (let one of config.files)
+        {
+            const watcher = chokidar.watch(one.path, {
+                ignored: /(^|[\/\\])\../, // ignore dotfiles
+                persistent: true
+            })
+
+            watcher.on(one.event, () =>
+            {
+                this.resolve(one)
+            })
+            info.push(watcher)
+        }
+
+        this.watchers[id] = info
+
+        return id
     }
 
-    ret.unwatch = function (watcher)
+    ret.unwatch = function (id)
     {
-        watcher.close()
+        const info = this.watchers[id]
+        if (info == null)
+        {
+            return
+        }
 
-        this.watchers.delete(watcher)
+        delete this.watchers[id]
+
+        for (let one of info)
+        {
+            one.close()
+        }
     }
 
     return ret
@@ -32,9 +69,14 @@ exports.start = function ()
 
 exports.stop = function ()
 {
-    for (let one of this.watchers.value())
+    for (let id in this.watchers)
     {
-        one.close()
+        let info = this.watchers[id]
+
+        for (let one of info)
+        {
+            one.close()
+        }
     }
-    this.watchers.clear()
+    this.watchers = {}
 }

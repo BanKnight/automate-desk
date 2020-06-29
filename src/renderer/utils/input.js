@@ -18,7 +18,7 @@ const inputs =
     },
     is_basic_type(type)
     {
-        return basic_types.includes(type)
+        return basic_types.includes(type) || !type
     },
     is_array_type(type)
     {
@@ -88,16 +88,15 @@ const inputs =
         {
             default_ = meta.default || meta.options[0].val
         }
-        else if (meta.type == "function")
-        {
-            default_ = new Function(meta.default || "")
-        }
         else if (meta.type == "input")                        
         {
             default_ = {}
             inputs.init(default_, meta, setter)
         }
-
+        else if (meta.type == "function")
+        {
+            default_ = new Function(meta.default || "")
+        }
         return default_
     },
     wrap_func(body)

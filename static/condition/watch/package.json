@@ -1,6 +1,6 @@
 {
     "name": "watch",
-    "title": "文件",
+    "title": "文件监控",
     "desc": "观察文件夹是否变化",
     "main": "index.js",
     "inputs": [
@@ -8,57 +8,88 @@
             "key": "files",
             "title": "文件列表",
             "type": "array",
-            "desc": "监控的文件列表",
+            "desc": "监控的文件",
             "define": {
-                "type": "file"
+                "type": "input",
+                "define": [
+                    {
+                        "key": "path",
+                        "title": "路径",
+                        "type": "file",
+                        "default": ""
+                    },
+                    {
+                        "key": "event",
+                        "title": "事件",
+                        "type": "select",
+                        "default": "change",
+                        "options": [
+                            {
+                                "key": "add",
+                                "title": "创建",
+                                "val": "add"
+                            },
+                            {
+                                "key": "change",
+                                "title": "修改",
+                                "val": "change"
+                            },
+                            {
+                                "key": "unlink",
+                                "title": "删除",
+                                "val": "unlink"
+                            }
+                        ]
+                    }
+                ]
             }
         },
         {
             "key": "folders",
-            "title": "文件夹",
+            "title": "文件夹列表",
             "type": "array",
             "desc": "监控的文件夹列表",
             "define": {
-                "type": "folder"
-            }
-        },
-        {
-            "key": "events",
-            "title": "事件",
-            "type": "array",
-            "desc": "监控的事件",
-            "define": {
-                "type": "select",
-                "options": [
+                "type": "input",
+                "define": [
                     {
-                        "key": "add",
-                        "title": "文件新增",
-                        "val": "add"
+                        "key": "path",
+                        "title": "路径",
+                        "type": "folder",
+                        "default": ""
                     },
                     {
-                        "key": "change",
-                        "title": "修改",
-                        "val": "change"
-                    },
-                    {
-                        "key": "unlink",
-                        "title": "文件删除",
-                        "val": "unlink"
-                    },
-                    {
-                        "key": "addDir",
-                        "title": "文件夹新增",
-                        "val": "addDir"
-                    },
-                    {
-                        "key": "unlinkDir",
-                        "title": "文件夹删除",
-                        "val": "unlinkDir"
-                    },
-                    {
-                        "key": "all",
-                        "title": "所有",
-                        "val": "all"
+                        "key": "event",
+                        "title": "事件",
+                        "type": "select",
+                        "default": "change",
+                        "options": [
+                            {
+                                "key": "add",
+                                "title": "有文件创建",
+                                "val": "add"
+                            },
+                            {
+                                "key": "change",
+                                "title": "有文件修改",
+                                "val": "change"
+                            },
+                            {
+                                "key": "unlink",
+                                "title": "有文件删除",
+                                "val": "unlink"
+                            },
+                            {
+                                "key": "addDir",
+                                "title": "有文件夹创建",
+                                "val": "addDir"
+                            },
+                            {
+                                "key": "unlinkDir",
+                                "title": "有文件夹删除",
+                                "val": "unlinkDir"
+                            }
+                        ]
                     }
                 ]
             }

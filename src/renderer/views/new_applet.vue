@@ -14,7 +14,7 @@
                         <el-form @submit.native.prevent label-width="80px" label-position="top">
                             <el-form-item label="触发器">
                                 <el-select
-                                    v-model="condition_name"
+                                    v-model="condition.name"
                                     placeholder="请选择"
                                     @change="select_cond"
                                 >
@@ -25,16 +25,15 @@
                                         :value="one.name"
                                     ></el-option>
                                 </el-select>
-
-                                <input-form
-                                    :key="condition_name"
-                                    v-if="condition_name "
-                                    v-model="condition[condition_name]"
-                                    label-position="top"
-                                    :meta="get_cond_meta_inputs(condition_name)"
-                                />
                             </el-form-item>
                         </el-form>
+                        <input-form
+                            :key="condition.name"
+                            v-if="condition.name "
+                            v-model="condition.options"
+                            label-position="top"
+                            :meta="template.condition[condition.name].inputs"
+                        />
                     </el-card>
                 </el-tab-pane>
                 <el-tab-pane label="动作" name="actions" class="full scroll-if-need">
@@ -111,11 +110,9 @@ export default {
     data()    {
         return {
             name: "",
-            condition_name: null,
-            condition: {},
+            condition: { name: null, options: {} },
             actions: [],
             new_action_name: null,
-            new_action: {},
         }
     },
     computed: {
@@ -128,30 +125,15 @@ export default {
     methods: {
         select_cond(name)
         {
-            if (this.condition[name] == null)
-            {
-                this.$set(this.condition, name, {})
-            }
-
-            return this.condition[name]
-        },
-        get_cond_meta_inputs(name)
-        {
-            return this.template.condition[name].inputs
-        },
-        select_action(name)
-        {
-            this.new_action = {}
+            this.condition.options = {}
         },
         add_action()
         {
             this.actions.push({
                 id: Date.now(),
-                inputs: this.new_action,
+                inputs: {},
                 template: this.template.action[this.new_action_name],
             })
-
-            this.new_action = {}
             this.new_action_name = null
         },
         del_action(index)
