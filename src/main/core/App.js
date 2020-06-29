@@ -8,6 +8,8 @@ import TDriver from "./template/TDriver"
 import Driver from "./Driver"
 import Applet from "./Applet"
 
+import electron from "electron"
+
 export default class App
 {
     constructor()
@@ -18,9 +20,10 @@ export default class App
             driver: {},
         }
 
-        this.config = null
         this.applets = {}               //[id] = {}
         this.drivers = {}               //[name]
+
+        this.config_path = path.join(electron.app.getPath('userData'), "config.json")
     }
 
     load()
@@ -73,6 +76,15 @@ export default class App
             }
         }
 
+        if (fs.existsSync(this.config_path) == true)
+        {
+            const config = JSON.parse(fs.readFileSync(this.config_path, "utf-8"))
+
+            console.log("load config", this.config_path)
+
+            this.update(config)
+        }
+
         // {
         //     const data = {
         //         applets: [],
@@ -92,6 +104,34 @@ export default class App
 
         //     this.update(data)
         // }
+    }
+
+    save()
+    {
+        const config = {
+            drivers: [],
+            applets: [],
+        }
+
+        for (let id in this.applets)
+        {
+            let applet = this.applets[id]
+
+            let data = applet.save()
+
+            config.applets.push(data)
+        }
+
+        for (let name in this.drivers)
+        {
+            let driver = this.drivers[name]
+
+            let data = driver.save()
+
+            config.drivers.push(data)
+        }
+
+        fs.writeFileSync(this.config_path, JSON.stringify(config))
     }
 
     update(config)
@@ -116,7 +156,6 @@ export default class App
             }
         }
 
-        this.config = config
         this.applets = {}
         this.drivers = {}
 
@@ -139,6 +178,8 @@ export default class App
                 applet.start()
             }
         }
+
+        this.save()
     }
     new_driver(config)
     {
@@ -182,6 +223,8 @@ export default class App
 
         delete this.applets[id]
 
+        this.save()
+
         return applet
     }
 
@@ -202,6 +245,8 @@ export default class App
         {
             driver.start()
         }
+
+        this.save()
 
         return driver
     }
@@ -226,6 +271,8 @@ export default class App
         {
             one.start()
         }
+
+        this.save()
 
         return one
     }

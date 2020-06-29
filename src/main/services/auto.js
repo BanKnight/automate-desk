@@ -49,6 +49,8 @@ export default function ()
 
         one.start()
 
+        core.save()
+
         return one.save()
     })
 
@@ -57,6 +59,8 @@ export default function ()
         const one = core.new_applet(config)
 
         one.start()
+
+        core.save()
 
         return one.save()
     })
