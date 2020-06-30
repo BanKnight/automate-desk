@@ -3,38 +3,16 @@ import Action from "./Action"
 
 export default class Applet
 {
-    constructor(options, app)
+    constructor(app)
     {
-        options.id = options.id || Date.now()
-
-        this.options = options
         this.app = app
 
-        this.id = options.id
-        this.name = options.name
+        this.id = null
+        this.name = null
         this.state = "init"
 
         this.condition = null
         this.actions = []
-
-        this.init()
-    }
-
-    init()
-    {
-        const config_condition = this.options.condition
-        const template = this.app.template.condition[config_condition.name]
-
-        this.condition = new Condition(template, config_condition.options, this)
-
-        for (let one of this.options.actions)
-        {
-            const template = this.app.template.action[one.name]
-
-            const action = new Action(template, one.options, this)
-
-            this.actions.push(action)
-        }
     }
 
     start()
@@ -74,13 +52,44 @@ export default class Applet
         })
     }
 
+    load(data)
+    {
+        {
+            this.id = data.id = data.id || Date.now()
+            this.name = data.name
+            this.state = "init"
+        }
+        {
+            this.condition = new Condition(this)
+
+            this.condition.load(data.condition)
+        }
+
+        for (let one of data.actions)
+        {
+            const action = new Action(this)
+
+            action.load(one)
+
+            this.actions.push(action)
+        }
+    }
+
     save()
     {
         const data = {
             id: this.id,
             name: this.name,
-            options: this.options,
-            state: this.state
+            state: this.state,
+            condition: this.condition.save(),
+            actions: [],
+        }
+
+        for (let action of this.actions)
+        {
+            const one = action.save()
+
+            data.actions.push(one)
         }
 
         return data

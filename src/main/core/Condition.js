@@ -1,16 +1,12 @@
 export default class Condition
 {
-    constructor(template, options, applet)
+    constructor(applet)
     {
-        this.template = template
-        this.options = options
         this.applet = applet
         this.app = applet.app
 
         this.output = null
 
-        this.start = this.template.start.bind(this)
-        this.stop = this.template.stop.bind(this)
     }
 
     get name()
@@ -34,5 +30,24 @@ export default class Condition
         }
 
         return driver.inst
+    }
+
+    load(data)
+    {
+        this.options = data.options
+        this.template = this.app.template.condition[data.name]
+
+        this.output = null
+
+        this.start = this.template.start.bind(this)
+        this.stop = this.template.stop.bind(this)
+    }
+
+    save()
+    {
+        return {
+            name: this.template.name,
+            options: this.options
+        }
     }
 }

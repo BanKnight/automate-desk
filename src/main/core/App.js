@@ -23,7 +23,7 @@ export default class App
         this.applets = {}               //[id] = {}
         this.drivers = {}               //[name]
 
-        this.config_path = path.join(electron.app.getPath('userData'), "config.json")
+        this.config_path = path.join(electron.app.getPath('userData'), "automate-desk.json")
     }
 
     load()
@@ -78,9 +78,9 @@ export default class App
 
         if (fs.existsSync(this.config_path) == true)
         {
-            const config = JSON.parse(fs.readFileSync(this.config_path, "utf-8"))
-
             console.log("load config", this.config_path)
+
+            const config = JSON.parse(fs.readFileSync(this.config_path, "utf-8"))
 
             this.update(config)
         }
@@ -188,7 +188,9 @@ export default class App
         console.log("new driver", config.name, template)
         console.dir(config)
 
-        const driver = new Driver(template, config.options, this)
+        const driver = new Driver(this)
+
+        driver.load(config)
 
         this.drivers[config.name] = driver
 
@@ -199,7 +201,9 @@ export default class App
     {
         console.log("new_applet", config)
 
-        const applet = new Applet(config, this)
+        const applet = new Applet(this)
+
+        applet.load(config)
 
         this.applets[applet.id] = applet
 

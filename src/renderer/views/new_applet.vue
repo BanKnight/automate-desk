@@ -76,7 +76,7 @@
                                         align="middle"
                                         style="padding:0 20px;border-bottom: 1px solid #EBEEF5;"
                                     >
-                                        <span>{{scope.row.template.title}}</span>
+                                        <span>{{template.action[scope.row.name].title}}</span>
                                         <el-button
                                             icon="el-icon-delete"
                                             type="text"
@@ -133,7 +133,6 @@ export default {
                 id: Date.now(),
                 name: this.new_action_name,
                 options: {},
-                template: this.template.action[this.new_action_name]
             })
             this.new_action_name = null
         },

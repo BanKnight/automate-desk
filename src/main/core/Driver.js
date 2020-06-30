@@ -1,12 +1,26 @@
 export default class Driver
 {
-    constructor(template, options, app)
+    constructor(app)
     {
-        this.template = template
-        this.options = options
         this.app = app
 
+        this.template = null
+        this.options = null
+        this.inst = null
+
         this.state = "init"
+    }
+
+    get name()
+    {
+        return this.template.name
+    }
+
+    load(data)
+    {
+        this.template = this.app.template.driver[data.name]
+        this.options = data.options
+
         this.inst = null
         this.start = () =>
         {
@@ -21,15 +35,10 @@ export default class Driver
         }
     }
 
-    get name()
-    {
-        return this.template.name
-    }
-
     save()
     {
         return {
-            template: this.template.name,
+            name: this.template.name,
             options: this.options,
             state: this.state,
         }

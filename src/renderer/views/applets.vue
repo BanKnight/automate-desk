@@ -65,7 +65,7 @@
                             v-if="editing.condition.name "
                             v-model="editing.condition.options"
                             label-position="top"
-                            :meta="template.condition[editing.condition.name].inputs"
+                            :meta="editing.condition.template.inputs"
                         />
                     </el-card>
                 </el-tab-pane>
@@ -120,7 +120,7 @@
                                     <input-form
                                         :key="scope.row.name"
                                         v-model="scope.row.options"
-                                        :meta="template.action[scope.row.name].inputs"
+                                        :meta="scope.row.template.inputs"
                                         label-position="left"
                                         style="padding:10px 20px"
                                     />
@@ -168,6 +168,8 @@ export default {
                 array.push(one)
             }
 
+            console.log("applets........", array)
+
             return array
         },
         filter()
@@ -187,9 +189,7 @@ export default {
         },
         check(applet)
         {
-            this.editing = deep_clone(applet.options)
-
-            console.log("check ", applet, this.editing)
+            this.editing = applet.clone()
 
             this.visible_editing = true
         },
@@ -200,6 +200,7 @@ export default {
         select_cond(name)
         {
             this.editing.condition.options = {}
+            this.editing.condition.template = this.template.condition[this.editing.condition.name]
         },
         add_action()
         {
@@ -219,12 +220,7 @@ export default {
         {
             console.log(this.editing)
 
-            await this.$store.dispatch("update_applet", {
-                id: this.editing.id,
-                name: this.editing.name,
-                condition: this.editing.condition,
-                actions: this.editing.actions,
-            })
+            await this.$store.dispatch("update_applet", this.editing.save())
 
             this.editing = null
             this.visible_editing = false

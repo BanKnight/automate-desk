@@ -2,11 +2,9 @@ import Vue from "vue"
 
 export default {
 
-    init(state, data)
+    init_template(state, template)
     {
-        state.template = data.template
-        state.drivers = data.drivers
-        state.applets = data.applets
+        state.template = template
     },
 
     new_driver(state, data)
@@ -14,9 +12,14 @@ export default {
         state.drivers[data.template.name] = data
     },
 
+    del_driver(state, name)
+    {
+        Vue.delete(state.drivers, name)
+    },
+
     new_applet(state, data)
     {
-        state.applets[data.id] = data
+        Vue.set(state.applets, data.id, data)
     },
 
     del_applet(state, id)
@@ -27,11 +30,15 @@ export default {
     },
     update_driver(state, data)
     {
-        state.drivers[data.template.name] = data
+        const driver = state.drivers[data.template.name]
+
+        driver.load(data)
     },
 
     update_applet(state, data)
     {
-        state.applets[data.id] = data
+        const applet = state.applets[data.id]
+
+        applet.load(data)
     },
 }

@@ -13,6 +13,8 @@ exports.start = function ()
 
     ret.watch = (config, cb) =>       //{files,folders},files = [{path,event}]
     {
+        cb = debounce(cb)
+
         const id = ++that.id_helper
         const info = []
 
@@ -85,4 +87,21 @@ exports.stop = function ()
         }
     }
     that.watchers = null
+}
+
+function debounce(fn, delay = 1000)
+{
+    var timer;
+    return function ()
+    {
+        var args = arguments;
+        if (timer)
+        {
+            clearTimeout(timer);
+        }
+        timer = setTimeout(() =>
+        {
+            fn.apply(this, args);
+        }, delay);
+    };
 }

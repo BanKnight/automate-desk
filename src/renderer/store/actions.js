@@ -1,68 +1,63 @@
 import ipc from "../utils/ipcRenderer"
 
-function handle_applet(applet, template)
-{
-    applet.condition = {
-        name: applet.options.condition.name,
-        options: applet.options.condition.options,
-    }
-
-    applet.condition.template = template.condition[applet.condition.name]
-
-    applet.actions = []
-
-    for (let action of applet.options.actions)
-    {
-        action.template = template.action[action.name]
-    }
-}
+import Applet from "@/core/Applet"
+import Driver from "@/core/Driver"
 
 export default {
-    async get_all({ commit })
+    async get_all({ commit, state })
     {
         const app = await ipc.invoke("get_all")
 
+        commit("init_template", app.template)
+
+        console.log("get all", app)
+
         for (let id in app.applets)
         {
-            const one = app.applets[id]
+            const options = app.applets[id]
 
-            handle_applet(one, app.template)
+            const applet = new Applet(state)
+
+            applet.load(options)
+
+            commit("new_applet", applet)
         }
 
         for (let name in app.drivers)
         {
-            const one = app.drivers[name]
+            const options = app.drivers[name]
 
-            one.template = app.template.driver[one.template]
+            const driver = new Driver(state)
+
+            driver.load(options)
+
+            commit("new_driver", driver)
         }
 
-        console.dir(app)
-
-        commit("init", app)
     },
 
     async new_driver({ commit, state }, config)
     {
-        const one = await ipc.invoke("new_driver", config)
+        const options = await ipc.invoke("new_driver", config)
 
-        const template = state.template
+        const driver = new Driver(state)
 
-        one.template = template.driver[one.template]
+        driver.load(options)
 
-        commit("new_driver", one)
+        commit("new_driver", driver)
     },
 
     async new_applet({ commit, state }, config)
     {
         console.log("new_applet", config)
 
-        const one = await ipc.invoke("new_applet", config)
+        const options = await ipc.invoke("new_applet", config)
 
-        const template = state.template
+        const applet = new Applet(state)
 
-        handle_applet(one, template)
+        applet.load(options)
 
-        commit("new_applet", one)
+        commit("new_applet", applet)
     },
 
     async del_applet({ commit }, id)
@@ -84,10 +79,6 @@ export default {
     async update_applet({ commit, state }, config)
     {
         const one = await ipc.invoke("update_applet", config)
-
-        const template = state.template
-
-        handle_applet(one, template)
 
         commit("update_applet", one)
     },
