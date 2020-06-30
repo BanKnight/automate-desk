@@ -5,8 +5,77 @@
     "inputs": [
         {
             "key": "method",
+            "title": "方法",
+            "type": "select",
+            "desc": "method",
+            "options": [
+                {
+                    "key": "get",
+                    "title": "get",
+                    "val": "get"
+                },
+                {
+                    "key": "post",
+                    "title": "post",
+                    "val": "post"
+                },
+                {
+                    "key": "put",
+                    "title": "put",
+                    "val": "put"
+                },
+                {
+                    "key": "delete",
+                    "title": "delete",
+                    "val": "delete"
+                }
+            ]
+        },
+        {
+            "key": "url",
+            "title": "地址",
             "type": "string",
-            "desc": "method"
+            "desc": "地址"
+        },
+        {
+            "key": "params",
+            "title": "url中的参数",
+            "type": "object",
+            "desc": "url中的参数"
+        },
+        {
+            "key": "data",
+            "title": "body中的参数",
+            "type": "object",
+            "desc": "body中的参数"
+        },
+        {
+            "key": "auth",
+            "title": "验证",
+            "type": "input",
+            "define": [
+                {
+                    "key": "username",
+                    "title": "用户名",
+                    "type": "string",
+                    "desc": "用户名"
+                },
+                {
+                    "key": "password",
+                    "title": "密码",
+                    "type": "string",
+                    "desc": "password",
+                    "attrs": {
+                        "show-password": true
+                    }
+                }
+            ]
+        },
+        {
+            "key": "other",
+            "title": "其他参数",
+            "type": "object",
+            "desc": "其他参数"
         }
     ]
 }

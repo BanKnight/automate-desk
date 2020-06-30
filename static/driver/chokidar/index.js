@@ -1,5 +1,3 @@
-console.log("this is chokidar", process.cwd())
-
 const chokidar = require('chokidar');
 
 exports.start = function ()

@@ -2,11 +2,28 @@ const axios = require('axios');
 
 exports.start = function ()
 {
-    const config = Object.assign(this.options.config || {}, { method: this.options.method, url: this.options.url })
+    const config = { ...this.options.other }
 
-    return () =>
+    for (let name in this.options)
     {
-        axios(config)
+        if (name != "other")
+        {
+            config[name] = this.options[name]
+        }
+    }
+
+    return async () =>
+    {
+        console.log("send a request", config)
+
+        try
+        {
+            await axios(config)
+        }
+        catch (e)
+        {
+            console.error(e)
+        }
     }
 }
 

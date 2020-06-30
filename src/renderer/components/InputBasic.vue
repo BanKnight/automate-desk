@@ -4,6 +4,7 @@
         :value="data"
         @input="on_input"
         :placeholder="meta.desc"
+        v-bind="meta.attrs"
     />
     <el-input
         v-else-if="meta.type == 'text'"
@@ -12,20 +13,38 @@
         type="textarea"
         autosize
         :placeholder="meta.desc"
+        v-bind="meta.attrs"
     />
 
-    <el-switch v-else-if="meta.type == 'boolean'" :value="data" @input="on_input" />
+    <el-switch
+        v-else-if="meta.type == 'boolean'"
+        :value="data"
+        @input="on_input"
+        v-bind="meta.attrs"
+    />
 
     <el-input-number
         v-else-if="meta.type == 'number'"
         :value="data"
         @input="on_input"
-        v-bind="meta"
+        v-bind="meta.attrs"
         :label="meta.desc"
     />
 
-    <input-file v-else-if="meta.type == 'file'" :value="data" @input="on_input" :meta="meta" />
-    <input-folder v-else-if="meta.type == 'folder'" :value="data" @input="on_input" :meta="meta" />
+    <input-file
+        v-else-if="meta.type == 'file'"
+        :value="data"
+        @input="on_input"
+        :meta="meta"
+        v-bind="meta.attrs"
+    />
+    <input-folder
+        v-else-if="meta.type == 'folder'"
+        :value="data"
+        @input="on_input"
+        :meta="meta"
+        v-bind="meta.attrs"
+    />
 
     <input-function
         v-else-if="meta.type == 'function'"

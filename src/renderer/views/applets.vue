@@ -34,13 +34,21 @@
 
                         <el-button
                             style="width:100%;height:50px;font-size:30px;border:0"
+                            :title="gen_applet_desc(scope.row)"
                             :icon="state_icon(scope.row.state)"
                         ></el-button>
                     </el-card>
                 </template>
             </el-table-column>
         </el-table>
-        <el-dialog v-if="editing" :title="editing.name" :visible.sync="visible_editing" center>
+        <el-dialog
+            v-if="editing"
+            :title="editing.name"
+            :visible.sync="visible_editing"
+            center
+            width="80%"
+            height="400px"
+        >
             <el-tabs value="condition" stretch>
                 <el-tab-pane label="条件" name="condition" class="full scroll-if-need">
                     <el-card class="box-card">
@@ -183,6 +191,23 @@ export default {
         }
     },
     methods: {
+        gen_applet_desc(applet)
+        {
+            const array = ["如果"]
+
+            array.push("'")
+            array.push(applet.condition.template.title)
+            array.push("',则触发")
+
+            for (let action of applet.actions)
+            {
+                array.push("'")
+                array.push(action.template.title)
+                array.push("',")
+            }
+
+            return array.join("")
+        },
         try_add()
         {
             this.$router.push({ name: 'new_applet' })

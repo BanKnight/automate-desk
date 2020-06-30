@@ -131,7 +131,7 @@ export default {
                 this.$set(one, "type", type)
 
                 this.$set(one, "values", {
-                    [type_val]: val
+                    [type]: val
                 })
 
                 this.data.push(one)

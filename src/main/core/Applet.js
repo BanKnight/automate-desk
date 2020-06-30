@@ -41,15 +41,12 @@ export default class Applet
         this.state = "init"
     }
 
-    trigger()
+    async trigger()
     {
-        setImmediate(() =>
+        for (let action of this.actions)
         {
-            for (let action of this.actions)
-            {
-                action.run()
-            }
-        })
+            await action.run()
+        }
     }
 
     load(data)
