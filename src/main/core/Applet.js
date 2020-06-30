@@ -1,5 +1,10 @@
+import { Notification } from "electron"
+
 import Condition from "./Condition"
 import Action from "./Action"
+
+
+
 
 export default class Applet
 {
@@ -43,9 +48,39 @@ export default class Applet
 
     async trigger()
     {
+
         for (let action of this.actions)
         {
-            await action.run()
+            try
+            {
+                await action.run()
+
+                let notification = new Notification({
+                    title: `${this.name}-${action.template.package.title}`, // 通知的标题, 将在通知窗口的顶部显示
+                    body: `执行完毕`, // 通知的正文文本, 将显示在标题或副标题下面
+                    silent: true, // 在显示通知时是否发出系统提示音
+                })
+
+                notification.show()
+                notification.on('click', () =>
+                {
+                    notification.close()
+                })
+            }
+            catch (e)
+            {
+                let notification = new Notification({
+                    title: `${this.name}-${action.template.package.title}`, // 通知的标题, 将在通知窗口的顶部显示
+                    body: `错误：${e.toString()}`, // 通知的正文文本, 将显示在标题或副标题下面
+                    silent: true, // 在显示通知时是否发出系统提示音
+                })
+
+                notification.show()
+                notification.on('click', () =>
+                {
+                    notification.close()
+                })
+            }
         }
     }
 

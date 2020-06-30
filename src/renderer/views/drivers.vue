@@ -42,13 +42,17 @@
             v-if="editing"
             :title="editing.template.title"
             :visible.sync="visible_editing"
+            width="80%"
             center
         >
-            <input-form
-                v-model="editing.options"
-                :meta="editing.template.inputs"
-                label-position="top"
-            />
+            <el-container style="400px" class="scroll-if-need">
+                <input-form
+                    v-model="editing.options"
+                    :meta="editing.template.inputs"
+                    label-position="top"
+                />
+            </el-container>
+
             <span slot="footer">
                 <el-button style="width:200px" @click="save">保存</el-button>
             </span>

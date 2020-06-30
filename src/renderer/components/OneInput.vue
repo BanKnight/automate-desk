@@ -24,9 +24,13 @@
         :meta="meta"
     />
 
-    <el-card v-else-if="input.is_input_type(meta.type)" class="box-card">
-        <input-form :value="value" @input="on_input" :meta="meta.define" />
-    </el-card>
+    <input-form
+        v-else-if="input.is_input_type(meta.type)"
+        :value="value"
+        @input="on_input"
+        :meta="meta.define"
+        size="small"
+    />
 </template>
 
 <script>

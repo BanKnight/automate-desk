@@ -6,33 +6,31 @@
             </el-row>
         </el-header>
         <el-main>
-            <el-card class="box-card">
-                <el-form label-position="top">
-                    <el-form-item label="选择">
-                        <el-select
-                            v-model="curr"
-                            value-key="name"
-                            placeholder="请选择"
-                            @change="select"
-                            style="width:100%;"
-                        >
-                            <el-option
-                                v-for="option in options"
-                                :key="option.name"
-                                :label="option.title"
-                                :value="option"
-                            ></el-option>
-                        </el-select>
-                    </el-form-item>
-                </el-form>
-                <input-form
-                    v-if="curr && curr.inputs.length > 0"
-                    :key="curr.name"
-                    v-model="inputs"
-                    :meta="curr.inputs"
-                    label-position="top"
-                />
-            </el-card>
+            <el-form label-position="top">
+                <el-form-item label="选择">
+                    <el-select
+                        v-model="curr"
+                        value-key="name"
+                        placeholder="请选择"
+                        @change="select"
+                        style="width:100%;"
+                    >
+                        <el-option
+                            v-for="option in options"
+                            :key="option.name"
+                            :label="option.title"
+                            :value="option"
+                        ></el-option>
+                    </el-select>
+                </el-form-item>
+            </el-form>
+            <input-form
+                v-if="curr && curr.inputs.length > 0"
+                :key="curr.name"
+                v-model="inputs"
+                :meta="curr.inputs"
+                label-position="top"
+            />
         </el-main>
 
         <el-footer>

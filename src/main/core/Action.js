@@ -26,6 +26,7 @@ export default class Action
 
     load(data)
     {
+        this.id = data.id
         this.options = data.options
         this.template = this.app.template.action[data.name]
 
@@ -40,6 +41,7 @@ export default class Action
     save()
     {
         return {
+            id: this.id,
             name: this.template.name,
             options: this.options
         }
