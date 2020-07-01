@@ -1,11 +1,11 @@
 const events = require('events');
 
-exports.start = () =>
+exports.start = function ()
 {
     return new events.EventEmitter();
 }
 
-exports.stop = () =>
+exports.stop = function ()
 {
     this.inst.removeAllListeners()
 }

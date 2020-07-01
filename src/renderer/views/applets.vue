@@ -1,63 +1,47 @@
 <template>
     <el-container class="full">
-        <el-header>
-            <el-row type="flex" class="full" justify="space-between" align="middle">
-                <el-button icon="el-icon-plus" style="margin-right:20px" @click="try_add"></el-button>
-                <el-input v-model="search" placeholder="输入关键字搜索" />
-            </el-row>
-        </el-header>
-
-        <el-main>
-            <el-table :data="filter" size="medium" height="100%">
-                <el-table-column label="开关">
-                    <template slot-scope="scope">
-                        <el-switch
-                            :value="scope.row.state =='running'"
-                            @change="change_state(scope.row,$event)"
-                        ></el-switch>
-                    </template>
-                </el-table-column>
-                <el-table-column prop="name" label="名称">
-                    <template slot-scope="scope">
-                        <el-card :body-style="{ padding: '0px' }">
-                            <el-row
-                                type="flex"
-                                justify="space-between"
-                                align="middle"
-                                style="padding-left:20px;"
-                            >
-                                <span>
-                                    <el-switch
-                                        :value="scope.row.state =='running'"
-                                        @change="change_state(scope.row,$event)"
-                                    ></el-switch>
-
-                                    <el-link
-                                        type="primary"
-                                        :title="gen_applet_desc(scope.row)"
-                                        @click="check(scope.row)"
-                                    >{{scope.row.name}}</el-link>
-                                </span>
-
-                                <el-button-group>
-                                    <el-button
-                                        :disabled="scope.row.state !='running'"
-                                        icon="el-icon-video-play"
-                                        @click="trigger_ui(scope.row)"
-                                        style="height:50px;font-size:30px;"
-                                    ></el-button>
-                                    <el-button
-                                        icon="el-icon-delete"
-                                        @click="try_del(scope.row)"
-                                        style="height:50px;font-size:30px;"
-                                    ></el-button>
-                                </el-button-group>
-                            </el-row>
-                        </el-card>
-                    </template>
-                </el-table-column>
-            </el-table>
-        </el-main>
+        <el-table :data="filter" size="medium" height="100%">
+            <el-table-column label="开关" width="60px">
+                <template slot-scope="scope">
+                    <el-switch
+                        :value="scope.row.state =='running'"
+                        @change="change_state(scope.row,$event)"
+                    ></el-switch>
+                </template>
+            </el-table-column>
+            <el-table-column prop="name" label="名称">
+                <template slot="header" slot-scope="scope">
+                    <el-input v-model="search" placeholder="输入关键字搜索" />
+                </template>
+                <template slot-scope="scope">
+                    <el-link
+                        type="primary"
+                        :title="gen_applet_desc(scope.row)"
+                        @click="check(scope.row)"
+                    >{{scope.row.name}}</el-link>
+                </template>
+            </el-table-column>
+            <el-table-column label="操作" width="200px" align="right">
+                <template slot="header">
+                    <el-button icon="el-icon-plus" @click="try_add"></el-button>
+                </template>
+                <template slot-scope="scope">
+                    <el-button-group>
+                        <el-button
+                            :disabled="scope.row.state !='running'"
+                            icon="el-icon-video-play"
+                            @click="trigger_ui(scope.row)"
+                            style="height:50px;font-size:30px;"
+                        ></el-button>
+                        <el-button
+                            icon="el-icon-delete"
+                            @click="try_del(scope.row)"
+                            style="height:50px;font-size:30px;"
+                        ></el-button>
+                    </el-button-group>
+                </template>
+            </el-table-column>
+        </el-table>
 
         <el-dialog v-if="editing" :visible.sync="visible_editing" center width="80%">
             <el-container style="height:400px" class="full-width">
@@ -103,34 +87,6 @@
                         </el-tab-pane>
                         <el-tab-pane label="动作" name="actions">
                             <el-container class="full scroll-if-need">
-                                <el-header style="padding:0">
-                                    <el-row
-                                        class="full"
-                                        type="flex"
-                                        justify="space-between"
-                                        align="middle"
-                                    >
-                                        <el-select
-                                            v-model="new_action_name"
-                                            placeholder="请选择"
-                                            style="width:100%;margin-right:10px"
-                                        >
-                                            <el-option
-                                                v-for="one in template.action"
-                                                :key="one.name"
-                                                :label="one.title"
-                                                :value="one.name"
-                                            ></el-option>
-                                        </el-select>
-
-                                        <el-button
-                                            :disabled="new_action_name == null"
-                                            icon="el-icon-plus"
-                                            @click="add_action"
-                                        />
-                                    </el-row>
-                                </el-header>
-
                                 <el-table
                                     :data="editing.actions"
                                     height="100%"
@@ -139,7 +95,7 @@
                                     ref="actions"
                                     class="full-width"
                                 >
-                                    <el-table-column width="35px">
+                                    <el-table-column label="移动" width="50px">
                                         <template slot-scope="scope">
                                             <i
                                                 class="el-icon-rank"
@@ -147,34 +103,47 @@
                                             ></i>
                                         </template>
                                     </el-table-column>
-
                                     <el-table-column type="index" label="#" width="35px"></el-table-column>
 
-                                    <el-table-column label="操作" width="100px">
+                                    <el-table-column type="expand">
                                         <template slot-scope="scope">
-                                            <el-button
-                                                icon="el-icon-delete"
-                                                type="text"
-                                                @click="del_action(scope.$index)"
-                                            >删除</el-button>
+                                            <input-form
+                                                v-if="scope.row.name"
+                                                :key="scope.row.id"
+                                                v-model="scope.row.options"
+                                                :meta="scope.row.template.inputs"
+                                                label-position="left"
+                                            />
                                         </template>
                                     </el-table-column>
 
                                     <el-table-column prop="name" label="名称">
                                         <template slot-scope="scope">
-                                            <span>{{scope.row.template.title}}</span>
+                                            <el-select
+                                                v-model="scope.row.name"
+                                                @change="select_action(scope.row,$event)"
+                                                placeholder="请选择"
+                                            >
+                                                <el-option
+                                                    v-for="one in template.action"
+                                                    :key="one.name"
+                                                    :label="one.title"
+                                                    :value="one.name"
+                                                ></el-option>
+                                            </el-select>
                                         </template>
                                     </el-table-column>
 
-                                    <el-table-column type="expand">
+                                    <el-table-column label="操作" width="100px" align="right">
+                                        <template slot="header">
+                                            <el-button icon="el-icon-plus" @click="add_action" />
+                                        </template>
+
                                         <template slot-scope="scope">
-                                            <input-form
-                                                :key="scope.row.id"
-                                                v-model="scope.row.options"
-                                                :meta="scope.row.template.inputs"
-                                                label-position="left"
-                                                style="padding:10px 20px"
-                                            />
+                                            <el-button
+                                                icon="el-icon-delete"
+                                                @click="del_action(scope.$index)"
+                                            ></el-button>
                                         </template>
                                     </el-table-column>
                                 </el-table>
@@ -202,7 +171,6 @@ export default {
             search: "",
             editing: null,
             visible_editing: false,
-            new_action_name: null,
         }
     },
 
@@ -220,8 +188,6 @@ export default {
 
                 array.push(one)
             }
-
-            console.log("applets........", array)
 
             return array
         },
@@ -300,11 +266,15 @@ export default {
         {
             this.editing.actions.push({
                 id: Date.now(),
-                name: this.new_action_name,
-                options: {},
-                template: this.template.action[this.new_action_name]
+                name: null,
+                options: null
             })
-            this.new_action_name = null
+        },
+        select_action(action, name)
+        {
+            action.name = name
+            action.options = {}
+            action.template = this.template.action[name]
         },
         del_action(index)
         {
@@ -313,6 +283,15 @@ export default {
         async save()
         {
             console.log(this.editing)
+
+            for (let i = this.editing.actions.length - 1; i >= 0; --i)
+            {
+                let action = this.editing.actions[i]
+                if (action.template == null)
+                {
+                    this.editing.actions.splice(i, 1)
+                }
+            }
 
             await this.$store.dispatch("update_applet", this.editing.save())
 

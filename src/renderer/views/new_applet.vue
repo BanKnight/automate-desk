@@ -47,28 +47,6 @@
                 </el-tab-pane>
                 <el-tab-pane label="动作" name="actions">
                     <el-container class="full scroll-if-need">
-                        <el-header style="padding:0">
-                            <el-row class="full" type="flex" justify="space-between" align="middle">
-                                <el-select
-                                    v-model="new_action_name"
-                                    placeholder="请选择"
-                                    style="width:100%;margin-right:10px"
-                                >
-                                    <el-option
-                                        v-for="one in template.action"
-                                        :key="one.name"
-                                        :label="one.title"
-                                        :value="one.name"
-                                    ></el-option>
-                                </el-select>
-
-                                <el-button
-                                    :disabled="new_action_name == null"
-                                    icon="el-icon-plus"
-                                    @click="add_action"
-                                />
-                            </el-row>
-                        </el-header>
                         <el-table
                             :data="actions"
                             height="100%"
@@ -77,7 +55,7 @@
                             ref="actions"
                             class="full-width"
                         >
-                            <el-table-column width="35px">
+                            <el-table-column label="移动" width="50px">
                                 <template slot-scope="scope">
                                     <i class="el-icon-rank" style="font-size:25px;cursor:move"></i>
                                 </template>
@@ -85,31 +63,44 @@
 
                             <el-table-column type="index" label="#" width="35px"></el-table-column>
 
-                            <el-table-column label="操作" width="100px">
+                            <el-table-column type="expand">
                                 <template slot-scope="scope">
-                                    <el-button
-                                        icon="el-icon-delete"
-                                        type="text"
-                                        @click="del_action(scope.$index)"
-                                    >删除</el-button>
+                                    <input-form
+                                        v-if="scope.row.name"
+                                        :key="scope.row.name"
+                                        v-model="scope.row.options"
+                                        :meta="template.action[scope.row.name].inputs"
+                                        label-position="left"
+                                    />
                                 </template>
                             </el-table-column>
 
                             <el-table-column prop="name" label="名称">
                                 <template slot-scope="scope">
-                                    <span>{{template.action[scope.row.name].title}}</span>
+                                    <el-select
+                                        v-model="scope.row.name"
+                                        @change="select_action(scope.row,$event)"
+                                        placeholder="请选择"
+                                    >
+                                        <el-option
+                                            v-for="one in template.action"
+                                            :key="one.name"
+                                            :label="one.title"
+                                            :value="one.name"
+                                        ></el-option>
+                                    </el-select>
                                 </template>
                             </el-table-column>
 
-                            <el-table-column type="expand">
+                            <el-table-column label="操作" width="100px" align="right">
+                                <template slot="header">
+                                    <el-button icon="el-icon-plus" @click="add_action" />
+                                </template>
                                 <template slot-scope="scope">
-                                    <input-form
-                                        :key="scope.row.name"
-                                        v-model="scope.row.options"
-                                        :meta="template.action[scope.row.name].inputs"
-                                        label-position="left"
-                                        style="padding:10px 20px"
-                                    />
+                                    <el-button
+                                        icon="el-icon-delete"
+                                        @click="del_action(scope.$index)"
+                                    >删除</el-button>
                                 </template>
                             </el-table-column>
                         </el-table>
@@ -168,10 +159,15 @@ export default {
         {
             this.actions.push({
                 id: Date.now(),
-                name: this.new_action_name,
-                options: {},
+                name: null,
+                options: null
             })
             this.new_action_name = null
+        },
+        select_action(action, name)
+        {
+            action.name = name
+            action.options = {}
         },
         del_action(index)
         {
@@ -193,6 +189,15 @@ export default {
             if (this.actions.length == 0)
             {
                 return
+            }
+
+            for (let i = this.actions.length - 1; i >= 0; --i)
+            {
+                let action = this.actions[i]
+                if (action.name == null)
+                {
+                    this.actions.splice(i, 1)
+                }
             }
 
             await this.$store.dispatch("new_applet", {

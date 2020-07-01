@@ -9,7 +9,8 @@ export default {
 
     new_driver(state, data)
     {
-        state.drivers[data.template.name] = data
+        Vue.set(state.drivers, data.name, data)
+
     },
 
     change_driver_state(state, data)

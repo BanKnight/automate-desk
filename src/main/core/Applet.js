@@ -61,29 +61,73 @@ export default class Applet
             notification.close()
         })
 
-        for (let i = 0, len = this.actions.length; i < len; ++i)
+        let collectors = this.actions.map((action) =>
+        {
+            return {
+                title: action.template.package.title,
+                result: "waiting"
+            }
+        })
+
+        console.log(collectors)
+
+        let should_break = false
+
+        for (let i = 0, len = this.actions.length; i < len && should_break == false; ++i)
         {
             let action = this.actions[i]
-
-            notification.title = `${this.name}-${action.template.package.title}`
+            let collector = collectors[i]
 
             try
             {
                 await action.run()
 
-                notification.body = `${i + 1}/${this.actions.length} 成功`
+                collector.result = "ok"
 
-                notification.show()
+
             }
             catch (e)
             {
-                notification.body = `${i + 1}/${this.actions.length} 失败：${e.toString()},跳过后续步骤`
+                collector.result = "failed"
+                collector.error = e.toString()
 
-                notification.show()
-
-                break
+                should_break = true
             }
+
+            notification.close()
+
+            notification.body = this.gen_notification_body(collectors)
+
+            console.log(notification.body)
+
+            notification.show()
         }
+
+
+    }
+
+    gen_notification_body(collectors)
+    {
+        let ret = []
+
+        let error = null
+
+        for (let i = 0, len = collectors.length; i < len; ++i)
+        {
+            let collector = collectors[i]
+
+            ret.push(`${i + 1}/${len}-${collector.title}:${collector.result}`)
+
+            error = error || collector.error
+        }
+
+        if (error)
+        {
+            ret.push("----------------")
+            ret.push(error)
+        }
+
+        return ret.join("\n")
     }
 
     load(data)

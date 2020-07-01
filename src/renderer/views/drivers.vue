@@ -1,39 +1,36 @@
 <template>
     <el-container class="full">
         <el-table :data="filter" size="medium" height="100%">
+            <el-table-column label="开关" width="60px">
+                <template slot-scope="scope">
+                    <el-switch
+                        :value="scope.row.state =='running'"
+                        @change="change_state(scope.row,$event)"
+                    ></el-switch>
+                </template>
+            </el-table-column>
+
             <el-table-column prop="name" label="名称">
                 <template slot="header" slot-scope="scope">
-                    <el-row type="flex">
-                        <el-button icon="el-icon-plus" style="margin-right:20px" @click="try_add"></el-button>
-                        <el-input v-model="search" placeholder="输入关键字搜索" />
-                    </el-row>
+                    <el-input v-model="search" placeholder="输入关键字搜索" />
                 </template>
-
                 <template slot-scope="scope">
-                    <el-card class="box-card" :body-style="{ padding: '0px' }">
-                        <el-row
-                            type="flex"
-                            justify="space-between"
-                            align="middle"
-                            style="padding-left:20px;border-bottom: 1px solid #EBEEF5;"
-                        >
-                            <span>{{scope.row.template.title}}</span>
-                            <el-button-group>
-                                <el-button icon="el-icon-delete" style="border:0">删除</el-button>
-                                <el-button
-                                    icon="el-icon-view"
-                                    style="border:0"
-                                    @click="editing = scope.row;visible_editing = true"
-                                >查看</el-button>
-                            </el-button-group>
-                        </el-row>
+                    <el-link type="primary" @click="check(scope.row)">{{scope.row.template.title}}</el-link>
+                </template>
+            </el-table-column>
 
+            <el-table-column label="操作" width="200px" align="right">
+                <template slot="header">
+                    <el-button icon="el-icon-plus" @click="try_add"></el-button>
+                </template>
+                <template slot-scope="scope">
+                    <el-button-group>
                         <el-button
-                            :title="scope.row.template.desc"
-                            style="width:100%;height:50px;font-size:30px;border:0"
-                            :icon="state_icon(scope.row.state)"
+                            icon="el-icon-delete"
+                            @click="try_del(scope.row)"
+                            style="height:50px;font-size:30px;"
                         ></el-button>
-                    </el-card>
+                    </el-button-group>
                 </template>
             </el-table-column>
         </el-table>
@@ -98,7 +95,7 @@ export default {
                 return this.drivers
             }
 
-            return this.drivers.filter(data => !this.search || data.name.toLowerCase().includes(this.search.toLowerCase()))
+            return this.drivers.filter(data => !this.search || data.template.title.toLowerCase().includes(this.search.toLowerCase()))
         }
     },
     methods: {
@@ -120,10 +117,42 @@ export default {
         {
             this.$router.push({ name: 'new_driver' })
         },
-        save()
+        check(driver)
         {
-            this.editing = null; this.visible_editing = false
-        }
+            this.editing = driver.clone()
+
+            this.visible_editing = true
+        },
+
+        async try_del(driver)
+        {
+            await this.$store.dispatch("del_driver", driver.name)
+        },
+        async save()
+        {
+
+            await this.$store.dispatch("update_driver", this.editing.save())
+
+            this.editing = null;
+            this.visible_editing = false
+        },
+        async change_state(driver)
+        {
+            if (driver.state == "running")
+            {
+                await this.$store.dispatch("operate_driver", {
+                    name: driver.name,
+                    op: "stop"
+                })
+            }
+            else
+            {
+                await this.$store.dispatch("operate_driver", {
+                    name: driver.name,
+                    op: "start"
+                })
+            }
+        },
 
     }
 

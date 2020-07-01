@@ -27,11 +27,21 @@ export default class Driver
             this.state = "error"
             this.inst = this.template.start.call(this)
             this.state = "running"
+
+            {
+                console.log("start", this.name, this.inst)
+            }
         }
         this.stop = () =>
         {
+            if (this.name == "event")
+            {
+                console.log("begin stop", this.inst)
+            }
+
             this.template.stop.call(this)
             this.state = "init"
+            this.inst = null
         }
     }
 

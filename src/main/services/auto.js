@@ -103,11 +103,15 @@ export default function ()
 
     ipcMain.handle("operate_driver", async (event, name, op) =>
     {
+        console.log("operate_driver", name, op)
+
         const one = core.drivers[name]
         if (one == null)
         {
             return
         }
+        console.log("operate_driver", name, op, one.state)
+
         if (op == "start" && one.state == "running")
         {
             return one.state
@@ -126,6 +130,7 @@ export default function ()
         }
         catch (err)
         {
+            console.log(err)
             return one.state
         }
         return one.state
