@@ -1,0 +1,15 @@
+{
+    "name": "hello",
+    "title": "hello",
+    "desc": "用于输出信息",
+    "main": "index.js",
+    "inputs": [
+        {
+            "key": "message",
+            "title": "输出的内容",
+            "type": "string",
+            "default": "hello world",
+            "desc": "随意什么参数"
+        }
+    ]
+}

@@ -1,0 +1,13 @@
+{
+    "name": "wait",
+    "title": "等待{sec}时间",
+    "desc": "等待{sec}时间",
+    "inputs": [
+        {
+            "key": "sec",
+            "title": "时间(s)",
+            "type": "number",
+            "desc": "等待一段时间"
+        }
+    ]
+}
