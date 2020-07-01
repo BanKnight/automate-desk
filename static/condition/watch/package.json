@@ -5,46 +5,6 @@
     "main": "index.js",
     "inputs": [
         {
-            "key": "files",
-            "title": "文件列表",
-            "type": "array",
-            "desc": "监控的文件",
-            "define": {
-                "type": "input",
-                "define": [
-                    {
-                        "key": "path",
-                        "title": "路径",
-                        "type": "file",
-                        "default": ""
-                    },
-                    {
-                        "key": "event",
-                        "title": "事件",
-                        "type": "select",
-                        "default": "change",
-                        "options": [
-                            {
-                                "key": "add",
-                                "title": "创建",
-                                "val": "add"
-                            },
-                            {
-                                "key": "change",
-                                "title": "修改",
-                                "val": "change"
-                            },
-                            {
-                                "key": "unlink",
-                                "title": "删除",
-                                "val": "unlink"
-                            }
-                        ]
-                    }
-                ]
-            }
-        },
-        {
             "key": "folders",
             "title": "文件夹列表",
             "type": "array",
@@ -88,6 +48,46 @@
                                 "key": "unlinkDir",
                                 "title": "有文件夹删除",
                                 "val": "unlinkDir"
+                            }
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "key": "files",
+            "title": "文件列表",
+            "type": "array",
+            "desc": "监控的文件",
+            "define": {
+                "type": "input",
+                "define": [
+                    {
+                        "key": "path",
+                        "title": "路径",
+                        "type": "file",
+                        "default": ""
+                    },
+                    {
+                        "key": "event",
+                        "title": "事件",
+                        "type": "select",
+                        "default": "change",
+                        "options": [
+                            {
+                                "key": "add",
+                                "title": "创建",
+                                "val": "add"
+                            },
+                            {
+                                "key": "change",
+                                "title": "修改",
+                                "val": "change"
+                            },
+                            {
+                                "key": "unlink",
+                                "title": "删除",
+                                "val": "unlink"
                             }
                         ]
                     }

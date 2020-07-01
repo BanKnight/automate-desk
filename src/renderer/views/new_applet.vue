@@ -77,9 +77,15 @@
                             ref="actions"
                             class="full-width"
                         >
-                            <el-table-column type="index" label="#"></el-table-column>
+                            <el-table-column width="35px">
+                                <template slot-scope="scope">
+                                    <i class="el-icon-rank" style="font-size:25px;cursor:move"></i>
+                                </template>
+                            </el-table-column>
 
-                            <el-table-column label="操作">
+                            <el-table-column type="index" label="#" width="35px"></el-table-column>
+
+                            <el-table-column label="操作" width="100px">
                                 <template slot-scope="scope">
                                     <el-button
                                         icon="el-icon-delete"
@@ -145,6 +151,7 @@ export default {
         const tbody = this.$refs.actions.$el.querySelector('.el-table__body-wrapper tbody')
         const _this = this
         Sortable.create(tbody, {
+            handle: ".el-icon-rank",
             onEnd({ newIndex, oldIndex })            {
                 const currRow = _this.actions.splice(oldIndex, 1)[0]
                 _this.actions.splice(newIndex, 0, currRow)

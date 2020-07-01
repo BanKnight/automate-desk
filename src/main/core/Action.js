@@ -24,6 +24,17 @@ export default class Action
         return this.inst()
     }
 
+    get_driver(name)
+    {
+        const driver = this.app.drivers[name]
+        if (driver == null)
+        {
+            return
+        }
+
+        return driver.inst
+    }
+
     load(data)
     {
         this.id = data.id

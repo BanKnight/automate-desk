@@ -98,6 +98,8 @@ export default {
         try_del(index)
         {
             this.$delete(this.data, index)
+
+            this.trige_input()
         },
         on_input(row, val)
         {

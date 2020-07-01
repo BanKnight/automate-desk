@@ -10,32 +10,39 @@
                 </template>
 
                 <template slot-scope="scope">
-                    <el-card class="box-card" :body-style="{ padding: '0px' }">
+                    <el-card :body-style="{ padding: '0px' }">
                         <el-row
                             type="flex"
                             justify="space-between"
                             align="middle"
-                            style="padding-left:20px;border-bottom: 1px solid #EBEEF5;"
+                            style="padding-left:20px;"
                         >
-                            <span>{{scope.row.name}}</span>
+                            <el-switch
+                                :value="scope.row.state =='running'"
+                                @change="change_state(scope.row,$event)"
+                            ></el-switch>
+
+                            <el-link
+                                type="primary"
+                                :title="gen_applet_desc(scope.row)"
+                                @click="check(scope.row)"
+                            >{{scope.row.name}}</el-link>
+
                             <el-button-group>
                                 <el-button
                                     icon="el-icon-delete"
                                     style="border:0"
                                     @click="try_del(scope.row)"
                                 >删除</el-button>
-                                <el-button
-                                    icon="el-icon-view"
-                                    style="border:0"
-                                    @click="check(scope.row)"
-                                >查看</el-button>
                             </el-button-group>
                         </el-row>
 
                         <el-button
-                            style="width:100%;height:50px;font-size:30px;border:0"
-                            :title="gen_applet_desc(scope.row)"
-                            :icon="state_icon(scope.row.state)"
+                            v-if="scope.row.condition.name == 'ui'"
+                            :disabled="scope.row.state !='running'"
+                            style="width:100%;height:50px;font-size:30px;border:0;border-top: 1px solid #EBEEF5;"
+                            icon="el-icon-video-play"
+                            @click="trigger_ui(scope.row)"
                         ></el-button>
                     </el-card>
                 </template>
@@ -121,9 +128,18 @@
                                     ref="actions"
                                     class="full-width"
                                 >
-                                    <el-table-column type="index" label="#"></el-table-column>
+                                    <el-table-column width="35px">
+                                        <template slot-scope="scope">
+                                            <i
+                                                class="el-icon-rank"
+                                                style="font-size:25px;cursor:move"
+                                            ></i>
+                                        </template>
+                                    </el-table-column>
 
-                                    <el-table-column label="操作">
+                                    <el-table-column type="index" label="#" width="35px"></el-table-column>
+
+                                    <el-table-column label="操作" width="100px">
                                         <template slot-scope="scope">
                                             <el-button
                                                 icon="el-icon-delete"
@@ -219,13 +235,13 @@ export default {
 
             array.push("'")
             array.push(applet.condition.template.title)
-            array.push("',则触发")
+            array.push("',执行")
 
             for (let action of applet.actions)
             {
-                array.push("'")
+                array.push(" '")
                 array.push(action.template.title)
-                array.push("',")
+                array.push("'")
             }
 
             return array.join("")
@@ -252,6 +268,7 @@ export default {
             const tbody = this.$refs.actions.$el.querySelector('.el-table__body-wrapper tbody')
             const _this = this
             Sortable.create(tbody, {
+                handle: ".el-icon-rank",
                 onEnd({ newIndex, oldIndex })                {
                     const currRow = _this.editing.actions.splice(oldIndex, 1)[0]
                     _this.editing.actions.splice(newIndex, 0, currRow)
@@ -292,23 +309,27 @@ export default {
             this.visible_editing = false
 
         },
-        state_icon(state)
+        async change_state(applet)
         {
-            if (state == "running")
+            if (applet.state == "running")
             {
-                return "el-icon-video-pause"
+                await this.$store.dispatch("operate_applet", {
+                    id: applet.id,
+                    op: "stop"
+                })
             }
-
-            if (state == "init")
+            else
             {
-                return "el-icon-video-play"
+                await this.$store.dispatch("operate_applet", {
+                    id: applet.id,
+                    op: "start"
+                })
             }
-
-            return "el-icon-error"
         },
-
-
-
+        trigger_ui(applet)
+        {
+            this.$store.dispatch("trigger_ui", applet.name)
+        }
     }
 }
 </script>

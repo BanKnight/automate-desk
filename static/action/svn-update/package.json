@@ -1,0 +1,13 @@
+{
+    "name": "svn-update",
+    "title": "svn 更新",
+    "desc": "svn 更新",
+    "inputs": [
+        {
+            "key": "cwd",
+            "title": "提交目录",
+            "type": "folder",
+            "desc": "提交目录"
+        }
+    ]
+}

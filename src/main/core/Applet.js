@@ -49,37 +49,39 @@ export default class Applet
     async trigger()
     {
 
-        for (let action of this.actions)
+        let notification = new Notification({
+            title: this.name, // 通知的标题, 将在通知窗口的顶部显示
+            body: `触发条件，开始执行`, // 通知的正文文本, 将显示在标题或副标题下面
+            silent: true, // 在显示通知时是否发出系统提示音
+        })
+
+        notification.show()
+        notification.on('click', () =>
         {
+            notification.close()
+        })
+
+        for (let i = 0, len = this.actions.length; i < len; ++i)
+        {
+            let action = this.actions[i]
+
+            notification.title = `${this.name}-${action.template.package.title}`
+
             try
             {
                 await action.run()
 
-                let notification = new Notification({
-                    title: `${this.name}-${action.template.package.title}`, // 通知的标题, 将在通知窗口的顶部显示
-                    body: `执行完毕`, // 通知的正文文本, 将显示在标题或副标题下面
-                    silent: true, // 在显示通知时是否发出系统提示音
-                })
+                notification.body = `${i + 1}/${this.actions.length} 成功`
 
                 notification.show()
-                notification.on('click', () =>
-                {
-                    notification.close()
-                })
             }
             catch (e)
             {
-                let notification = new Notification({
-                    title: `${this.name}-${action.template.package.title}`, // 通知的标题, 将在通知窗口的顶部显示
-                    body: `错误：${e.toString()}`, // 通知的正文文本, 将显示在标题或副标题下面
-                    silent: true, // 在显示通知时是否发出系统提示音
-                })
+                notification.body = `${i + 1}/${this.actions.length} 失败：${e.toString()},跳过后续步骤`
 
                 notification.show()
-                notification.on('click', () =>
-                {
-                    notification.close()
-                })
+
+                break
             }
         }
     }

@@ -1,0 +1,14 @@
+{
+    "name": "debug",
+    "title": "调试",
+    "desc": "用于调试信息",
+    "main": "index.js",
+    "inputs": [
+        {
+            "key": "args",
+            "title": "参数",
+            "type": "object",
+            "desc": "随意什么参数"
+        }
+    ]
+}

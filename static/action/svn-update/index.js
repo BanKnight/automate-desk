@@ -6,9 +6,11 @@ module.exports = function ()
     {
         console.log("run exec", this.options)
 
-        const child = spawn(this.options.cmd, this.options.args, {
-            cwd: this.options.cwd,
-            encoding: "utf8"
+        const cmd = "svn"
+        const args = ["up"]
+
+        const child = spawn(cmd, args, {
+            cwd: this.options.cwd, encoding: "utf8"
         })
 
         child.stdout.on('data', (data) =>

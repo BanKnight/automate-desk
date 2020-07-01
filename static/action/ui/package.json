@@ -1,0 +1,13 @@
+{
+    "name": "ui",
+    "title": "ui事件",
+    "desc": "主动触发一次ui事件",
+    "main": "./index.js",
+    "inputs": [
+        {
+            "key": "name",
+            "title": "名称",
+            "type": "string"
+        }
+    ]
+}

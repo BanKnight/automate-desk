@@ -65,6 +65,13 @@ export default function ()
         return one.save()
     })
 
+    ipcMain.handle("del_driver", async (event, name) =>
+    {
+        core.del_driver(name)
+
+        return name
+    })
+
     ipcMain.handle("del_applet", async (event, id) =>
     {
         core.del_applet(id)
@@ -77,5 +84,86 @@ export default function ()
         const one = core.update_applet(config)
 
         return one.save()
+    })
+
+    ipcMain.handle("update_driver", async (event, config) =>
+    {
+        const one = core.update_driver(config)
+
+        return one.save()
+    })
+
+    ipcMain.handle("operate_driver", async (event, name, op) =>
+    {
+        const one = core.drivers[name]
+        if (one == null)
+        {
+            return
+        }
+        if (op == "start" && one.state == "running")
+        {
+            return one.state
+        }
+
+        if (op == "stop" && one.state != "running")
+        {
+            return one.state
+        }
+
+        try
+        {
+            await one[op]()
+        }
+        catch (err)
+        {
+            return one.state
+        }
+        return one.state
+
+    })
+
+    ipcMain.handle("operate_applet", async (event, id, op) =>
+    {
+        const one = core.applets[id]
+        if (one == null)
+        {
+            return
+        }
+
+        console.log("operate_applet", id, op, one.state)
+
+        if (op == "start" && one.state == "running")
+        {
+            return one.state
+        }
+
+        if (op == "stop" && one.state != "running")
+        {
+            return one.state
+        }
+
+        try
+        {
+            await one[op]()
+        }
+        catch (err)
+        {
+            return one.state
+        }
+        return one.state
+    })
+
+    ipcMain.handle("trigger_ui", async (event, ui) =>
+    {
+        const driver = core.drivers.ui
+
+        if (driver == null || driver.state != "running")
+        {
+            return false
+        }
+
+        driver.inst.emit(ui)
+
+        return true
     })
 }

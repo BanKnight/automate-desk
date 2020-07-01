@@ -18,32 +18,15 @@ exports.start = function ()
 
         for (let one of config.files)
         {
-            const watcher = chokidar.watch(one.path, {
-                ignored: /(^|[\/\\])\../, // ignore dotfiles
-                persistent: true,
-                ignoreInitial: true,
-            })
-
-            watcher.on(one.event, () =>
-            {
-                cb(one.path, one.event)
-            })
+            const watcher = make_watcher(one, cb, config)
 
             info.push(watcher)
         }
 
         for (let one of config.folders)
         {
-            const watcher = chokidar.watch(one.path, {
-                ignored: /(^|[\/\\])\../, // ignore dotfiles
-                persistent: true,
-                ignoreInitial: true,
-            })
+            const watcher = make_watcher(one, cb, config)
 
-            watcher.on(one.event, () =>
-            {
-                cb(one.path, one.event)
-            })
             info.push(watcher)
         }
 
@@ -102,4 +85,27 @@ function debounce(fn, delay = 1000)
             fn.apply(this, args);
         }, delay);
     };
+}
+
+function make_watcher(one, cb, options)
+{
+    let ignored = /(^|[\/\\])\../
+
+    if (options.ignored)
+    {
+        ignored = new RegExp(options.ignored)
+    }
+
+    const watcher = chokidar.watch(one.path, {
+        ignored: ignored, // ignore dotfiles
+        persistent: true,
+        ignoreInitial: true,
+    })
+
+    watcher.on(one.event, () =>
+    {
+        cb(one.path, one.event)
+    })
+
+    return watcher
 }

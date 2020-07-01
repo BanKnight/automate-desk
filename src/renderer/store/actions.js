@@ -47,6 +47,22 @@ export default {
         commit("new_driver", driver)
     },
 
+    async operate_driver({ commit }, { name, op })
+    {
+        const state = await ipc.invoke("operate_driver", name, op)
+
+        commit("change_driver_state", { name, state })
+    },
+
+    async del_driver({ commit }, name)
+    {
+        await ipc.invoke("del_driver", name)
+
+        console.log("del_driver", name)
+
+        commit("del_driver", name)
+    },
+
     async new_applet({ commit, state }, config)
     {
         console.log("new_applet", config)
@@ -58,6 +74,13 @@ export default {
         applet.load(options)
 
         commit("new_applet", applet)
+    },
+
+    async operate_applet({ commit }, { id, op })
+    {
+        const state = await ipc.invoke("operate_applet", id, op)
+
+        commit("change_applet_state", { id, state })
     },
 
     async del_applet({ commit }, id)
@@ -82,4 +105,9 @@ export default {
 
         commit("update_applet", one)
     },
+
+    async trigger_ui({ commit, state }, event)
+    {
+        await ipc.invoke("trigger_ui", event)
+    }
 }

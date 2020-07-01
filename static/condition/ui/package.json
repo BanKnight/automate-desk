@@ -1,0 +1,7 @@
+{
+    "name": "ui",
+    "title": "ui事件",
+    "desc": "点击按钮后触发",
+    "main": "index.js",
+    "inputs": []
+}

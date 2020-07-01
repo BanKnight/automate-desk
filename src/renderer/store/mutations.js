@@ -12,6 +12,17 @@ export default {
         state.drivers[data.template.name] = data
     },
 
+    change_driver_state(state, data)
+    {
+        const driver = state.drivers[data.name]
+        if (driver == null)
+        {
+            return
+        }
+
+        driver.state = data.state
+    },
+
     del_driver(state, name)
     {
         Vue.delete(state.drivers, name)
@@ -20,6 +31,16 @@ export default {
     new_applet(state, data)
     {
         Vue.set(state.applets, data.id, data)
+    },
+    change_applet_state(state, data)
+    {
+        const applet = state.applets[data.id]
+        if (applet == null)
+        {
+            return
+        }
+
+        applet.state = data.state
     },
 
     del_applet(state, id)
@@ -41,4 +62,5 @@ export default {
 
         applet.load(data)
     },
+
 }
