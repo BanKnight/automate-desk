@@ -1,53 +1,64 @@
 <template>
     <el-container class="full">
-        <el-table :data="filter" size="medium" height="100%">
-            <el-table-column prop="name" label="名称">
-                <template slot="header" slot-scope="scope">
-                    <el-row type="flex">
-                        <el-button icon="el-icon-plus" style="margin-right:20px" @click="try_add"></el-button>
-                        <el-input v-model="search" placeholder="输入关键字搜索" />
-                    </el-row>
-                </template>
+        <el-header>
+            <el-row type="flex" class="full" justify="space-between" align="middle">
+                <el-button icon="el-icon-plus" style="margin-right:20px" @click="try_add"></el-button>
+                <el-input v-model="search" placeholder="输入关键字搜索" />
+            </el-row>
+        </el-header>
 
-                <template slot-scope="scope">
-                    <el-card :body-style="{ padding: '0px' }">
-                        <el-row
-                            type="flex"
-                            justify="space-between"
-                            align="middle"
-                            style="padding-left:20px;"
-                        >
-                            <el-switch
-                                :value="scope.row.state =='running'"
-                                @change="change_state(scope.row,$event)"
-                            ></el-switch>
+        <el-main>
+            <el-table :data="filter" size="medium" height="100%">
+                <el-table-column label="开关">
+                    <template slot-scope="scope">
+                        <el-switch
+                            :value="scope.row.state =='running'"
+                            @change="change_state(scope.row,$event)"
+                        ></el-switch>
+                    </template>
+                </el-table-column>
+                <el-table-column prop="name" label="名称">
+                    <template slot-scope="scope">
+                        <el-card :body-style="{ padding: '0px' }">
+                            <el-row
+                                type="flex"
+                                justify="space-between"
+                                align="middle"
+                                style="padding-left:20px;"
+                            >
+                                <span>
+                                    <el-switch
+                                        :value="scope.row.state =='running'"
+                                        @change="change_state(scope.row,$event)"
+                                    ></el-switch>
 
-                            <el-link
-                                type="primary"
-                                :title="gen_applet_desc(scope.row)"
-                                @click="check(scope.row)"
-                            >{{scope.row.name}}</el-link>
+                                    <el-link
+                                        type="primary"
+                                        :title="gen_applet_desc(scope.row)"
+                                        @click="check(scope.row)"
+                                    >{{scope.row.name}}</el-link>
+                                </span>
 
-                            <el-button-group>
-                                <el-button
-                                    icon="el-icon-delete"
-                                    style="border:0"
-                                    @click="try_del(scope.row)"
-                                >删除</el-button>
-                            </el-button-group>
-                        </el-row>
+                                <el-button-group>
+                                    <el-button
+                                        :disabled="scope.row.state !='running'"
+                                        icon="el-icon-video-play"
+                                        @click="trigger_ui(scope.row)"
+                                        style="height:50px;font-size:30px;"
+                                    ></el-button>
+                                    <el-button
+                                        icon="el-icon-delete"
+                                        @click="try_del(scope.row)"
+                                        style="height:50px;font-size:30px;"
+                                    ></el-button>
+                                </el-button-group>
+                            </el-row>
+                        </el-card>
+                    </template>
+                </el-table-column>
+            </el-table>
+        </el-main>
 
-                        <el-button
-                            v-if="scope.row.condition.name == 'ui'"
-                            :disabled="scope.row.state !='running'"
-                            style="width:100%;height:50px;font-size:30px;border:0;border-top: 1px solid #EBEEF5;"
-                            icon="el-icon-video-play"
-                            @click="trigger_ui(scope.row)"
-                        ></el-button>
-                    </el-card>
-                </template>
-            </el-table-column>
-        </el-table>
         <el-dialog v-if="editing" :visible.sync="visible_editing" center width="80%">
             <el-container style="height:400px" class="full-width">
                 <el-header style="padding:0">

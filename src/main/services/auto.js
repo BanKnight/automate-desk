@@ -69,12 +69,16 @@ export default function ()
     {
         core.del_driver(name)
 
+        core.save()
+
         return name
     })
 
     ipcMain.handle("del_applet", async (event, id) =>
     {
         core.del_applet(id)
+
+        core.save()
 
         return id
     })
@@ -83,12 +87,16 @@ export default function ()
     {
         const one = core.update_applet(config)
 
+        core.save()
+
         return one.save()
     })
 
     ipcMain.handle("update_driver", async (event, config) =>
     {
         const one = core.update_driver(config)
+
+        core.save()
 
         return one.save()
     })
@@ -113,6 +121,8 @@ export default function ()
         try
         {
             await one[op]()
+
+            core.save()
         }
         catch (err)
         {
@@ -145,6 +155,8 @@ export default function ()
         try
         {
             await one[op]()
+
+            core.save()
         }
         catch (err)
         {
