@@ -54,6 +54,7 @@
                             row-key="id"
                             ref="actions"
                             class="full-width"
+                            default-expand-all
                         >
                             <el-table-column label="移动" width="50px">
                                 <template slot-scope="scope">
