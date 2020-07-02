@@ -55,7 +55,7 @@ async function svn_add(files, cwd)
 
     for (let file of files)
     {
-        await exec(`svn add '${file}'`, options)
+        await exec(`svn add "${file}"`, options)
     }
 
     console.log("svn_add")
@@ -67,7 +67,7 @@ async function svn_del(files, cwd)
 
     for (let file of files)
     {
-        await exec(`svn delete '${file}'`, options)
+        await exec(`svn delete "${file}"`, options)
     }
 
     console.log("svn_del")

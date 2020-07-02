@@ -3,9 +3,6 @@ import { Notification } from "electron"
 import Condition from "./Condition"
 import Action from "./Action"
 
-
-
-
 export default class Applet
 {
     constructor(app)
@@ -69,8 +66,6 @@ export default class Applet
             }
         })
 
-        console.log(collectors)
-
         let should_break = false
 
         for (let i = 0, len = this.actions.length; i < len && should_break == false; ++i)
@@ -83,13 +78,13 @@ export default class Applet
                 await action.run()
 
                 collector.result = "ok"
-
-
             }
             catch (e)
             {
                 collector.result = "failed"
                 collector.error = e.toString()
+
+                console.error(e.toString())
 
                 should_break = true
             }
@@ -97,8 +92,6 @@ export default class Applet
             notification.close()
 
             notification.body = this.gen_notification_body(collectors)
-
-            console.log(notification.body)
 
             notification.show()
         }

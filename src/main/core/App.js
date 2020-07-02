@@ -78,8 +78,6 @@ export default class App
 
         if (fs.existsSync(this.config_path) == true)
         {
-            console.log("load config", this.config_path)
-
             const config = JSON.parse(fs.readFileSync(this.config_path, "utf-8"))
 
             this.update(config)
@@ -183,11 +181,6 @@ export default class App
     }
     new_driver(config)
     {
-        const template = this.template.driver[config.name]
-
-        console.log("new driver", config.name, template)
-        console.dir(config)
-
         const driver = new Driver(this)
 
         driver.load(config)
@@ -199,8 +192,6 @@ export default class App
 
     new_applet(config)
     {
-        console.log("new_applet", config)
-
         const applet = new Applet(this)
 
         applet.load(config)
@@ -212,8 +203,6 @@ export default class App
 
     del_applet(id)
     {
-        console.log("del_applet", id)
-
         const applet = this.applets[id]
         if (applet == null)
         {
