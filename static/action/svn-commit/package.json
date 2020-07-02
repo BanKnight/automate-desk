@@ -5,9 +5,9 @@
     "inputs": [
         {
             "key": "cwd",
-            "title": "提交目录",
+            "title": "工作目录",
             "type": "folder",
-            "desc": "提交目录"
+            "desc": "工作目录"
         },
         {
             "key": "include_add",
