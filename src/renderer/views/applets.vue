@@ -28,7 +28,7 @@
                 <template slot-scope="scope">
                     <el-button-group>
                         <el-button
-                            :disabled="scope.row.state !='running'"
+                            :disabled="scope.row.state !='running' || scope.row.condition.name !== 'ui'"
                             icon="el-icon-video-play"
                             @click="trigger_ui(scope.row)"
                             style="height:50px;font-size:30px;"
@@ -318,6 +318,10 @@ export default {
         },
         trigger_ui(applet)
         {
+            if (applet.condition.name != "ui")
+            {
+                return
+            }
             this.$store.dispatch("trigger_ui", applet.name)
         }
     }
