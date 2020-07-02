@@ -1,0 +1,14 @@
+{
+    "name": "cron",
+    "title": "计划任务",
+    "desc": "定时触发",
+    "main": "index.js",
+    "inputs": [
+        {
+            "key": "time",
+            "title": "定时",
+            "type": "string",
+            "default": "* * * * *"
+        }
+    ]
+}

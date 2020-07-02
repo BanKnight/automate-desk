@@ -4,21 +4,23 @@ exports.start = function ()
 {
     this.tasks = new Map()
 
+    const that = this
+
     return {
         schedule(time, cb)
         {
             const task = cron.schedule(time, cb)
 
-            this.tasks.set(cb, task)
+            that.tasks.set(cb, task)
         },
         unschedule(cb)
         {
-            const task = this.tasks.get(cb)
+            const task = that.tasks.get(cb)
 
             if (task)
             {
                 task.stop()
-                this.tasks.delete(cb)
+                that.tasks.delete(cb)
             }
         }
     }
