@@ -9,6 +9,16 @@
                     ></el-switch>
                 </template>
             </el-table-column>
+
+            <el-table-column label="执行" width="100px">
+                <template slot-scope="scope">
+                    <el-button
+                        :disabled="scope.row.state !='running' || scope.row.condition.name !== 'ui'"
+                        icon="el-icon-video-play"
+                        @click="trigger_ui(scope.row)"
+                    ></el-button>
+                </template>
+            </el-table-column>
             <el-table-column prop="name" label="名称">
                 <template slot="header" slot-scope="scope">
                     <el-input v-model="search" placeholder="输入关键字搜索" />
@@ -21,23 +31,14 @@
                     >{{scope.row.name}}</el-link>
                 </template>
             </el-table-column>
-            <el-table-column label="操作" width="200px" align="right">
+
+            <el-table-column label="操作" width="80px" align="right">
                 <template slot="header">
                     <el-button icon="el-icon-plus" @click="try_add"></el-button>
                 </template>
                 <template slot-scope="scope">
                     <el-button-group>
-                        <el-button
-                            :disabled="scope.row.state !='running' || scope.row.condition.name !== 'ui'"
-                            icon="el-icon-video-play"
-                            @click="trigger_ui(scope.row)"
-                            style="height:50px;font-size:30px;"
-                        ></el-button>
-                        <el-button
-                            icon="el-icon-delete"
-                            @click="try_del(scope.row)"
-                            style="height:50px;font-size:30px;"
-                        ></el-button>
+                        <el-button icon="el-icon-delete" @click="try_del(scope.row)"></el-button>
                     </el-button-group>
                 </template>
             </el-table-column>
