@@ -21,15 +21,25 @@ html {
   height:100%;
   background: white;
 
-  ::-webkit-scrollbar {
-    display: none;
-  }
 }
 
 #app
 {
   height:100%;
 
+}
+
+::-webkit-scrollbar-track-piece {
+  background: #d3dce6;
+}
+::-webkit-scrollbar {
+  width: 6px;
+  height: 8px;
+  background-color: transparent;
+  }
+::-webkit-scrollbar-thumb {
+  background: #99a9bf;
+  border-radius: 6px;
 }
 
 *,
