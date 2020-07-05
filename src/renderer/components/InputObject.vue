@@ -1,6 +1,6 @@
 <template>
     <el-table :data="data">
-        <el-table-column label="操作" width="80" row-key="key">
+        <el-table-column label="操作" width="80px" row-key="key">
             <template slot="header" slot-scope="scope">
                 <el-button icon="el-icon-plus" style="margin-right:20px" @click="try_add()"></el-button>
             </template>
@@ -11,13 +11,13 @@
             </template>
         </el-table-column>
 
-        <el-table-column label="名称" width="200">
+        <el-table-column label="名称" width="120px">
             <template slot-scope="scope">
                 <el-input :value="scope.row.key" @input="on_input_key(scope.row,$event)" />
             </template>
         </el-table-column>
 
-        <el-table-column label="类型" width="240">
+        <el-table-column label="类型" width="120px">
             <template slot-scope="scope">
                 <el-select
                     :value="scope.row.type"

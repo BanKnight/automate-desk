@@ -1,7 +1,7 @@
 <template>
     <el-container class="full">
-        <el-table :data="filter" size="medium" height="100%">
-            <el-table-column label="开关" width="60px">
+        <el-table :data="filter" size="medium" height="100%" border>
+            <el-table-column label="开关" width="70px">
                 <template slot-scope="scope">
                     <el-switch
                         :value="scope.row.state =='running'"
@@ -10,19 +10,7 @@
                 </template>
             </el-table-column>
 
-            <el-table-column label="执行" width="100px">
-                <template slot-scope="scope">
-                    <el-button
-                        :disabled="scope.row.state !='running' || scope.row.condition.name !== 'ui'"
-                        icon="el-icon-video-play"
-                        @click="trigger_ui(scope.row)"
-                    ></el-button>
-                </template>
-            </el-table-column>
-            <el-table-column prop="name" label="名称">
-                <template slot="header" slot-scope="scope">
-                    <el-input v-model="search" placeholder="输入关键字搜索" />
-                </template>
+            <el-table-column label="名称">
                 <template slot-scope="scope">
                     <el-link
                         type="primary"
@@ -31,7 +19,15 @@
                     >{{scope.row.name}}</el-link>
                 </template>
             </el-table-column>
-
+            <el-table-column label="触发" width="100px">
+                <template slot-scope="scope">
+                    <el-button
+                        :disabled="scope.row.state !='running' || scope.row.condition.name !== 'ui'"
+                        icon="el-icon-video-play"
+                        @click="trigger_ui(scope.row)"
+                    ></el-button>
+                </template>
+            </el-table-column>
             <el-table-column label="操作" width="80px" align="right">
                 <template slot="header">
                     <el-button icon="el-icon-plus" @click="try_add"></el-button>
@@ -118,7 +114,7 @@
                                         </template>
                                     </el-table-column>
 
-                                    <el-table-column prop="name" label="名称">
+                                    <el-table-column label="类型">
                                         <template slot-scope="scope">
                                             <el-select
                                                 v-model="scope.row.name"

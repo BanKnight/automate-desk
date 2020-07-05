@@ -1,4 +1,5 @@
 import { Notification } from "electron"
+import { nanoid } from 'nanoid'
 
 import Condition from "./Condition"
 import Action from "./Action"
@@ -95,8 +96,6 @@ export default class Applet
 
             notification.show()
         }
-
-
     }
 
     gen_notification_body(collectors)
@@ -126,7 +125,7 @@ export default class Applet
     load(data)
     {
         {
-            this.id = data.id = data.id || Date.now()
+            this.id = data.id = data.id || nanoid()
             this.name = data.name
             this.state = "init"
         }

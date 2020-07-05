@@ -75,6 +75,7 @@
     "fs-extra": "^9.0.1",
     "koa": "^2.13.0",
     "koa-router": "^9.0.1",
+    "nanoid": "^3.1.10",
     "node-cron": "^2.0.3"
   },
   "devDependencies": {

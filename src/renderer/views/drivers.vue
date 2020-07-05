@@ -1,7 +1,7 @@
 <template>
     <el-container class="full">
-        <el-table :data="filter" size="medium" height="100%">
-            <el-table-column label="开关" width="60px">
+        <el-table :data="filter" size="medium" height="100%" border>
+            <el-table-column label="开关" width="70px">
                 <template slot-scope="scope">
                     <el-switch
                         :value="scope.row.state =='running'"
@@ -10,10 +10,7 @@
                 </template>
             </el-table-column>
 
-            <el-table-column prop="name" label="名称">
-                <template slot="header" slot-scope="scope">
-                    <el-input v-model="search" placeholder="输入关键字搜索" />
-                </template>
+            <el-table-column label="名称">
                 <template slot-scope="scope">
                     <el-link type="primary" @click="check(scope.row)">{{scope.row.template.title}}</el-link>
                 </template>

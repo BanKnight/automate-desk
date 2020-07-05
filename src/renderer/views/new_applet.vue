@@ -76,7 +76,7 @@
                                 </template>
                             </el-table-column>
 
-                            <el-table-column prop="name" label="名称">
+                            <el-table-column label="类型">
                                 <template slot-scope="scope">
                                     <el-select
                                         v-model="scope.row.name"
