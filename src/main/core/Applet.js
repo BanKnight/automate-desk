@@ -1,5 +1,6 @@
 import { Notification } from "electron"
 import { generate } from 'shortid'
+import log from "electron-log"
 
 import Condition from "./Condition"
 import Action from "./Action"
@@ -16,8 +17,6 @@ export default class Applet
 
         this.condition = null
         this.actions = []
-
-        this.logs = []
     }
 
     start()
@@ -48,6 +47,7 @@ export default class Applet
 
     async trigger()
     {
+        this.log("trigger")
 
         let notification = new Notification({
             title: this.name, // 通知的标题, 将在通知窗口的顶部显示
@@ -81,13 +81,15 @@ export default class Applet
                 await action.run()
 
                 collector.result = "ok"
+
+                this.log(collector.title, "ok")
             }
             catch (e)
             {
                 collector.result = "failed"
                 collector.error = e.toString()
 
-                console.error(e.toString())
+                this.error(collector.title, "failed:", collector.error)
 
                 should_break = true
             }
@@ -102,7 +104,12 @@ export default class Applet
 
     log(...args)
     {
-        this.logs.push(args.join(" "))
+        log.log(this.name, ":", ...args)
+    }
+
+    error(...args)
+    {
+        log.error(this.name, ":", ...args)
     }
 
     gen_notification_body(collectors)

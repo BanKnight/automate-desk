@@ -71,6 +71,7 @@
     "axios": "^0.19.2",
     "chokidar": "^3.4.0",
     "date-fns": "^2.14.0",
+    "electron-log": "^4.2.2",
     "electron-updater": "^4.3.1",
     "fs-extra": "^9.0.1",
     "koa": "^2.13.0",

@@ -4,7 +4,7 @@ module.exports = function ()
 {
     return new Promise((resolve, reject) =>
     {
-        console.log("run exec", this.options)
+        this.log("run exec", this.options)
 
         const cmd = "svn"
         const args = ["up"]
@@ -15,7 +15,7 @@ module.exports = function ()
 
         child.stdout.on('data', (data) =>
         {
-            console.log(data.toString())
+            this.log(data.toString())
         });
 
         let error = ""

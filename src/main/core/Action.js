@@ -60,6 +60,11 @@ export default class Action
 
     log(...args)
     {
-        this.applet.log(this.template.package.title, ...args)
+        this.applet.log(`[${this.template.package.title}]`, ...args)
+    }
+
+    error(...args)
+    {
+        this.applet.error(`[${this.template.package.title}]`, ...args)
     }
 }

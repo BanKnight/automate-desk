@@ -14,17 +14,17 @@ exports.start = function ()
 
     return async () =>
     {
-        console.log("send a request", config)
+        this.log("send a request", config)
 
         try
         {
             await axios.get(this.options.url, config)
 
-            console.log("finish jenkins build")
+            this.log("finish jenkins build")
         }
         catch (e)
         {
-            console.error(e)
+            this.error(e)
         }
     }
 }

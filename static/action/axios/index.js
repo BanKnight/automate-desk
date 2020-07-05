@@ -14,7 +14,7 @@ exports.start = function ()
 
     return async () =>
     {
-        console.log("send a request", config)
+        this.log("send a request", config)
 
         try
         {
@@ -22,7 +22,7 @@ exports.start = function ()
         }
         catch (e)
         {
-            console.error(e)
+            this.error(e)
         }
     }
 }

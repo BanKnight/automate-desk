@@ -4,7 +4,7 @@ module.exports = function ()
 {
     return new Promise((resolve, reject) =>
     {
-        console.log("run exec", this.options)
+        this.log("run exec", this.options)
 
         const child = spawn(this.options.cmd, this.options.args, {
             cwd: this.options.cwd,
@@ -13,7 +13,7 @@ module.exports = function ()
 
         child.stdout.on('data', (data) =>
         {
-            console.log(data.toString())
+            this.log(data.toString())
         });
 
         let error = ""

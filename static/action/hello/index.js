@@ -1,5 +1,5 @@
 
 module.exports = function ()
 {
-    console.log(this.options.message)
+    this.log(this.options.message)
 }

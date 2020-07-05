@@ -1,12 +1,12 @@
 exports.start = function ()
 {
-    console.log(__filename, "start", this.options)
+    this.log(__filename, "start", this.options)
 
     const chokidar = this.get_driver("chokidar")
 
     this.watcher = chokidar.watch(this.options, (...args) =>
     {
-        console.log(...args)
+        this.log(...args)
 
         this.resolve()
     })
