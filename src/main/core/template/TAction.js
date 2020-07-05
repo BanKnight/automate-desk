@@ -2,9 +2,8 @@ const path = require("path")
 
 export default class TAction
 {
-    constructor(name, root)
+    constructor(root)
     {
-        this.name = name
         this.root = root
     }
 
@@ -33,5 +32,10 @@ export default class TAction
     get stop()
     {
         return this.template.stop
+    }
+
+    get name()
+    {
+        return this.template.package.name
     }
 }

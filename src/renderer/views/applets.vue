@@ -19,7 +19,7 @@
                     >{{scope.row.name}}</el-link>
                 </template>
             </el-table-column>
-            <el-table-column label="触发" width="100px">
+            <el-table-column label="触发" width="80px">
                 <template slot-scope="scope">
                     <el-button
                         :disabled="scope.row.state !='running' || scope.row.condition.name !== 'ui'"

@@ -48,7 +48,7 @@ export default class Driver
     save()
     {
         return {
-            name: this.template.name,
+            name: this.template.package.name,
             options: this.options,
             state: this.state,
         }

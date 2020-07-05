@@ -12,7 +12,7 @@ export default class Condition
 
     get name()
     {
-        return this.template.name
+        return this.template.package.name
     }
 
     resolve(output)
@@ -47,7 +47,7 @@ export default class Condition
     save()
     {
         return {
-            name: this.template.name,
+            name: this.name,
             options: this.options
         }
     }

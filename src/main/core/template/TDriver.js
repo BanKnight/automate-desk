@@ -2,9 +2,8 @@ import path from "path"
 
 export default class TDriver
 {
-    constructor(name, root)
+    constructor(root)
     {
-        this.name = name
         this.root = root
     }
 

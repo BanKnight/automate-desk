@@ -2,9 +2,8 @@ const path = require("path")
 
 export default class TCondition
 {
-    constructor(name, root)
+    constructor(root)
     {
-        this.name = name
         this.root = root
     }
 

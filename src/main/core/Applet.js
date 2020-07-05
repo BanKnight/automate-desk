@@ -16,6 +16,8 @@ export default class Applet
 
         this.condition = null
         this.actions = []
+
+        this.logs = []
     }
 
     start()
@@ -96,6 +98,11 @@ export default class Applet
 
             notification.show()
         }
+    }
+
+    log(...args)
+    {
+        this.logs.push(args.join(" "))
     }
 
     gen_notification_body(collectors)

@@ -16,7 +16,7 @@ export default class Action
 
     get name()
     {
-        return this.template.name
+        return this.template.package.name
     }
 
     run()
@@ -53,8 +53,13 @@ export default class Action
     {
         return {
             id: this.id,
-            name: this.template.name,
+            name: this.name,
             options: this.options
         }
+    }
+
+    log(...args)
+    {
+        this.applet.log(this.template.package.title, ...args)
     }
 }

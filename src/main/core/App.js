@@ -36,7 +36,7 @@ export default class App
             {
                 const sub = path.join(parent, file)
 
-                const template = new TDriver(file, sub)
+                const template = new TDriver(sub)
 
                 template.load()
 
@@ -52,7 +52,7 @@ export default class App
             {
                 const sub = path.join(parent, file)
 
-                const template = new TCondition(file, sub)
+                const template = new TCondition(sub)
 
                 template.load()
 
@@ -68,7 +68,7 @@ export default class App
             {
                 const sub = path.join(parent, file)
 
-                const template = new TAction(file, sub)
+                const template = new TAction(sub)
 
                 template.load()
 
@@ -80,28 +80,11 @@ export default class App
         {
             const config = JSON.parse(fs.readFileSync(this.config_path, "utf-8"))
 
+            console.log("config_path", this.config_path)
+
             this.update(config)
         }
 
-        // {
-        //     const data = {
-        //         applets: [],
-        //         drivers: [],
-        //     }
-
-        //     for (let name in this.template.driver)
-        //     {
-        //         let one = this.template.driver[name]
-
-        //         data.drivers.push({
-        //             name: name,
-        //             state: "init",
-        //             options: {}
-        //         })
-        //     }
-
-        //     this.update(data)
-        // }
     }
 
     save()
@@ -181,6 +164,9 @@ export default class App
     }
     new_driver(config)
     {
+
+        console.log("new_driver", config)
+
         const driver = new Driver(this)
 
         driver.load(config)
@@ -192,6 +178,9 @@ export default class App
 
     new_applet(config)
     {
+
+        console.log("new_applet", config)
+
         const applet = new Applet(this)
 
         applet.load(config)
