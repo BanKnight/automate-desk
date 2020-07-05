@@ -1,5 +1,5 @@
 import { Notification } from "electron"
-import { nanoid } from 'nanoid'
+import { generate } from 'shortid'
 
 import Condition from "./Condition"
 import Action from "./Action"
@@ -132,7 +132,7 @@ export default class Applet
     load(data)
     {
         {
-            this.id = data.id = data.id || nanoid()
+            this.id = data.id = data.id || generate()
             this.name = data.name
             this.state = "init"
         }
