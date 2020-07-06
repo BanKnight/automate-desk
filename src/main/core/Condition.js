@@ -51,4 +51,14 @@ export default class Condition
             options: this.options
         }
     }
+
+    log(...args)
+    {
+        this.applet.log(`[${this.template.package.title}]`, ...args)
+    }
+
+    error(...args)
+    {
+        this.applet.error(`[${this.template.package.title}]`, ...args)
+    }
 }

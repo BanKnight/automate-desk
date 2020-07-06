@@ -165,6 +165,7 @@ export default function ()
         }
         catch (err)
         {
+            one.error(err)
             return one.state
         }
         return one.state

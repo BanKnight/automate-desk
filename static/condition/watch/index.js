@@ -6,7 +6,7 @@ exports.start = function ()
 
     this.watcher = chokidar.watch(this.options, (...args) =>
     {
-        this.log(...args)
+        // this.log(...args)
 
         this.resolve()
     })
