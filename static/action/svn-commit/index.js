@@ -3,7 +3,7 @@ const exec = util.promisify(require('child_process').exec);
 
 module.exports = async function ()
 {
-    const files = await svn_status(this.options.cwd)
+    const files = await svn_status.call(this, this.options.cwd)
 
     if (this.options.include_add)
     {
@@ -12,10 +12,10 @@ module.exports = async function ()
 
     if (this.options.include_del)
     {
-        await svn_del.call(thisfiles["!"], this.options.cwd)
+        await svn_del.call(this, files["!"], this.options.cwd)
     }
 
-    await svn_commit.call(thisthis.options.message, this.options.cwd)
+    await svn_commit.call(this, this.options.message, this.options.cwd)
 }
 
 async function svn_status(cwd)
@@ -44,8 +44,6 @@ async function svn_status(cwd)
         files[state].push(file)
     }
 
-    this.log("svn-status", files)
-
     return files
 }
 
@@ -57,8 +55,6 @@ async function svn_add(files, cwd)
     {
         await exec(`svn add "${file}"`, options)
     }
-
-    this.log("svn_add")
 }
 
 async function svn_del(files, cwd)
@@ -69,8 +65,6 @@ async function svn_del(files, cwd)
     {
         await exec(`svn delete "${file}"`, options)
     }
-
-    this.log("svn_del")
 }
 
 async function svn_commit(message, cwd)
