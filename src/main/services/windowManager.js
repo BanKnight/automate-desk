@@ -31,10 +31,11 @@ function createMainWindow()
    */
   mainWindow = new BrowserWindow({
     height: 700,
-    useContentSize: false,
     width: 600,
     minWidth: 600,
+    useContentSize: false,
     show: false,
+    resizable: process.env.NODE_ENV === 'development',
     frame: config.IsUseSysTitle,
     titleBarStyle: 'hidden',
     webPreferences: {
@@ -97,8 +98,8 @@ function createMainWindow()
 function loadindWindow()
 {
   loadWindow = new BrowserWindow({
-    width: 400,
-    height: 600,
+    height: 700,
+    width: 600,
     frame: false,
     backgroundColor: '#222',
     transparent: true,
