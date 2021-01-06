@@ -68,7 +68,7 @@
     }
   },
   "dependencies": {
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "chokidar": "^3.4.0",
     "date-fns": "^2.14.0",
     "electron-log": "^4.2.2",
