@@ -47,14 +47,17 @@ const inputs =
     },
     init_one(container, one, setter)
     {
-        if (container[one.key])
+        const array = one.key.split("@")
+        const key = array[0]
+
+        if (container[key])
         {
             return
         }
 
         let default_ = inputs.make_default(one, setter)
 
-        setter(container, one.key, default_)
+        setter(container, key, default_)
     },
     make_default(meta, setter = default_setter)
     {

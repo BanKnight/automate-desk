@@ -79,6 +79,8 @@ export default {
                 array.push(one)
             }
 
+            array.sort(this.sort)
+
             return array
         },
         filter()
@@ -92,6 +94,16 @@ export default {
         }
     },
     methods: {
+
+        sort(first, second)
+        {
+            if (first.state != second.state)
+            {
+                return first.state < second.state
+            }
+
+            return first.name < second.name
+        },
         state_icon(state)
         {
             if (state == "running")

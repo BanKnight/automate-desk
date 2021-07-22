@@ -2,6 +2,7 @@
     <el-input
         v-if="meta.type == 'string'"
         :value="data"
+        :label="data"
         @input="on_input"
         :placeholder="meta.desc"
         v-bind="meta.attrs"
@@ -9,6 +10,7 @@
     <el-input
         v-else-if="meta.type == 'text'"
         :value="data"
+        :label="data"
         @input="on_input"
         type="textarea"
         autosize
@@ -19,6 +21,7 @@
     <el-switch
         v-else-if="meta.type == 'boolean'"
         :value="data"
+        :label="data"
         @input="on_input"
         v-bind="meta.attrs"
     />
@@ -75,7 +78,8 @@ export default {
             required: true,
         }
     },
-    data()    {
+    data()
+    {
         return { data: null }
     },
     created()

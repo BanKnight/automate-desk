@@ -41,6 +41,11 @@ async function svn_status(cwd)
         let state = line.substr(0, 1)
         let file = line.substring(8).replace("\r", "")
 
+        if (file.includes("~") == true)
+        {
+            continue
+        }
+
         files[state].push(file)
     }
 

@@ -1,8 +1,18 @@
 <template>
-    <el-form label-width="80px" v-bind="$attrs">
-        <el-form-item v-for="one in meta" :key="one.key" :label="one.title">
-            <one-input :value="data[one.key]" @input="on_input(one.key,$event)" :meta="one" />
-        </el-form-item>
+    <el-form label-width="auto" v-bind="$attrs">
+        <template v-for="one in meta">
+            <el-form-item
+                :key="one.key"
+                :label="one.title"
+                v-if="is_visible(one.key)"
+            >
+                <one-input
+                    :value="data[fetch_key(one.key)]"
+                    @input="on_input(one.key, $event)"
+                    :meta="one"
+                />
+            </el-form-item>
+        </template>
     </el-form>
 </template>
 
@@ -30,11 +40,11 @@ export default {
     {
         return { data: {} }
     },
-    created()    {
+    created()
+    {
         this.init()
     },
     watch: {
-
         meta()
         {
             this.init()
@@ -53,6 +63,22 @@ export default {
         {
             this.data[key] = value;
             this.$emit("input", this.data)
+        },
+        is_visible(key)
+        {
+            const array = key.split("@")
+            const second = array[1]
+
+            if (second == null)
+            {
+                return true
+            }
+
+            return !!this.data[second]
+        },
+        fetch_key(key)
+        {
+            return key.split("@")[0]
         }
     }
 }

@@ -1,0 +1,28 @@
+{
+    "name": "copy",
+    "title": "复制",
+    "desc": "复制文件",
+    "inputs": [
+        {
+            "key": "source",
+            "title": "源",
+            "type": "string",
+            "default": "",
+            "desc": "你要复制的路径"
+        },
+        {
+            "key": "dest",
+            "title": "目标",
+            "type": "string",
+            "default": "",
+            "desc": "你要复制到的的路径"
+        },
+        {
+            "key": "delete_first",
+            "title": "复制前先删除",
+            "type": "boolean",
+            "default": "false",
+            "desc": "复制前先删除"
+        }
+    ]
+}

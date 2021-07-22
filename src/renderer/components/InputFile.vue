@@ -1,6 +1,15 @@
 <template>
-    <el-input placeholder="请输入路径" :value="data" @input="on_input">
-        <el-button slot="append" icon="el-icon-folder-opened" @click="on_open"></el-button>
+    <el-input
+        placeholder="请输入路径"
+        :value="data"
+        :label="data"
+        @input="on_input"
+    >
+        <el-button
+            slot="append"
+            icon="el-icon-folder-opened"
+            @click="on_open"
+        ></el-button>
     </el-input>
 </template>
 
@@ -12,7 +21,8 @@ const { dialog } = require("electron").remote;
 
 export default {
     name: "input-file",
-    data()    {
+    data()
+    {
         return {
             data: this.value
         };
@@ -28,7 +38,8 @@ export default {
             required: true,
         }
     },
-    data()    {
+    data()
+    {
         return { data: null }
     },
     created()
@@ -67,7 +78,8 @@ export default {
             }
 
         },
-        on_open()        {
+        on_open()
+        {
             let that = this;
 
             dialog.showOpenDialog(
@@ -77,11 +89,13 @@ export default {
                 })
                 .then(({ canceled, filePaths }) =>
                 {
-                    if (canceled)                    {
+                    if (canceled)
+                    {
                         return;
                     }
 
-                    if (filePaths.length == 0)                    {
+                    if (filePaths.length == 0)
+                    {
                         return;
                     }
 

@@ -186,6 +186,8 @@ export default {
                 array.push(one)
             }
 
+            array.sort(this.sort)
+
             return array
         },
         filter()
@@ -197,10 +199,6 @@ export default {
 
             return this.applets.filter(data => !this.search || data.name.toLowerCase().includes(this.search.toLowerCase()))
         }
-    },
-    mounted()    {
-
-
     },
     methods: {
         gen_applet_desc(applet)
@@ -220,6 +218,20 @@ export default {
 
             return array.join("")
         },
+        sort(first, second)
+        {
+            if (first.state != second.state)
+            {
+                return first.state < second.state
+            }
+
+            if (first.name != second.name)
+            {
+                return first.name < second.name
+            }
+
+            return first.id < second.id
+        },
         try_add()
         {
             this.$router.push({ name: 'new_applet' })
@@ -227,8 +239,6 @@ export default {
         check(applet)
         {
             this.editing = applet.clone()
-
-            console.log("check ---------", this.editing.actions)
 
             this.visible_editing = true
 
