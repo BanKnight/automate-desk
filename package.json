@@ -114,7 +114,7 @@
     "cross-env": "^7.0.2",
     "css-loader": "^3.6.0",
     "del": "^5.1.0",
-    "electron": "^9.0.4",
+    "electron": "^11.5.0",
     "electron-builder": "^22.7.0",
     "electron-devtools-installer": "^3.0.0",
     "element-ui": "^2.13.2",
